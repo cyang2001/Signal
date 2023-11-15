@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.6)  15 NOV 2023 12:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.6)  15 NOV 2023 14:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -92,69 +92,29 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 14.
  [1
 
-{/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-No file main.toc.
+{/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./main.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 3.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 3.
+)
 \tf@toc=\write3
 \openout3 = `main.toc'.
 
-[2] (./lectures/Introduction.tex
-
-./lectures/Introduction.tex:1: LaTeX Error: Can be used only in preamble.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.1 \documentclass
-                  [class=article, crop=false]{standalone}
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-./lectures/Introduction.tex:2: LaTeX Error: Can be used only in preamble.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.2 \usepackage
-               [subpreambles=true]{standalone}
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-./lectures/Introduction.tex:3: LaTeX Error: Can be used only in preamble.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3 \begin{document}
-                    
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-[3] (./main.aux) ) )
-(\end occurred inside a group at level 1)
-
-### semi simple group (level 1) entered at line 3 (\begingroup)
-### bottom level 
+ [2] (./lectures/Introduction.tex) [3] (./lectures/Méthod/Méthod.tex) (./lectures/Méthod/Detection_du_signal_utile.tex) (./lectures/Méthod/Synchronisation.tex) (./lectures/Méthod/Decodage.tex) [4] (./lectures/Resultats_Experimentaux.tex) [5] (./lectures/Conclusion.tex) [6] (./main.aux) ) 
 Here is how much of TeX's memory you used:
- 1383 strings out of 478268
- 23433 string characters out of 5846348
+ 1421 strings out of 478268
+ 24496 string characters out of 5846348
  311887 words of memory out of 5000000
- 19616 multiletter control sequences out of 15000+600000
- 472899 words of font info for 40 fonts, out of 8000000 for 9000
+ 19632 multiletter control sequences out of 15000+600000
+ 473514 words of font info for 42 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,7n,62p,311b,206s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on main.pdf (3 pages, 53358 bytes).
+</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
+Output written on main.pdf (6 pages, 74116 bytes).
 PDF statistics:
- 34 PDF objects out of 1000 (max. 8388607)
- 20 compressed objects within 1 object stream
+ 48 PDF objects out of 1000 (max. 8388607)
+ 29 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
