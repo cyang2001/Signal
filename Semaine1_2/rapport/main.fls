@@ -147,6 +147,10 @@ INPUT main.toc
 INPUT main.toc
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
 OUTPUT main.toc
+INPUT ./problem.tex
+INPUT problem.tex
+INPUT ./problem.tex
+INPUT problem.tex
 INPUT ./lectures/Introduction.tex
 INPUT lectures/Introduction.tex
 INPUT ./lectures/Introduction.tex

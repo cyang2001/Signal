@@ -1,5 +1,5 @@
 function FunctionB()
-    [x, t] = FunctionA();
+    [x,~] = FunctionA();
     meanValue = mean(x);
     power = mean(x.^2);
     fprintf('Mean value: %f\n', meanValue);
