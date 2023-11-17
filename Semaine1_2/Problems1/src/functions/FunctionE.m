@@ -1,8 +1,8 @@
 function FunctionE()
   [y,~] = FunctionD;
   [x,~] = FunctionA;
-  [c_1, lags_1] = MyAutoCorr(x);
-  [c_2, lags_2] = xcorr(x);
+  [c_1, lags_1] = MyAutoCorr(y);
+  [c_2, lags_2] = xcorr(y);
   [c_3, lags_3] = MyInterCorr(x,y);
   [c_4, lags_4] = xcorr(x,y);
   figure;

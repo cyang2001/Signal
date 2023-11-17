@@ -1,4 +1,4 @@
-function [s1,s2,s3,s4] = FunctionF()
+function [s1,s2,s3,s4] = FunctionF(lengthF)
   addpath ../../../Audios
   [s1, Fs1] = audioread("MarteauPiqueur01.mp3");
   [s2, Fs2] = audioread("Jardin01.mp3");
@@ -16,6 +16,7 @@ function [s1,s2,s3,s4] = FunctionF()
   n4 = length(s4);
   Ts4 = 1/Fs4;
   t4 = 0:Ts4:(n4-1)*Ts4;
+
   meanValue_s1 = mean(s1);
   meanValue_s2 = mean(s2);
   meanValue_s3 = mean(s3);
@@ -50,3 +51,15 @@ function [s1,s2,s3,s4] = FunctionF()
   xlabel('second');
   ylabel('volt');
 end
+function power = Fentetre(signal, lengthF)
+  N = length(signal);
+  power = [];  
+
+
+  for i = 1:lengthF:N-lengthF+1
+    window = signal(i:i+lengthF-1);  
+    windowPower = mean(window.^2);  
+    power = [power, windowPower];    
+  end
+end
+
