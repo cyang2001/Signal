@@ -16,7 +16,7 @@ function [s1,s2,s3,s4] = FunctionF(lengthF)
   n4 = length(s4);
   Ts4 = 1/Fs4;
   t4 = 0:Ts4:(n4-1)*Ts4;
-
+  Fenetre(s1, 10000);
   power_s1 = mean(s1.^2);
   power_s2 = mean(s2.^2);
   power_s3 = mean(s3.^2);
@@ -59,6 +59,7 @@ function power = Fenetre(signal, lengthF)
   for j = 1:length(power)
     fprintf('power of window%d is %f\n',j,power(j));
   end
+  fprintf('mean of power is %f\n',mean(power));
 end
 
 
