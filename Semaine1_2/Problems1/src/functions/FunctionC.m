@@ -12,6 +12,11 @@ function FunctionC()
       x_4=[x_4,0.5];
     end
   end
+  meanValue_x_4 = mean(x_4);
+  power_x_4 = mean(x_4.^2);
+  fprintf('Mean value: %f\n', meanValue_x_4);
+  fprintf('Power: %f\n', power_x_4);
+  fprintf('Power en dBm: %f\n', log10(power_x_4*10^3))
   figure;
   subplot(2,1,1);
   plot(t,x_3);
