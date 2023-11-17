@@ -17,10 +17,6 @@ function [s1,s2,s3,s4] = FunctionF(lengthF)
   Ts4 = 1/Fs4;
   t4 = 0:Ts4:(n4-1)*Ts4;
 
-  meanValue_s1 = mean(s1);
-  meanValue_s2 = mean(s2);
-  meanValue_s3 = mean(s3);
-  meanValue_s4 = mean(s4);
   power_s1 = mean(s1.^2);
   power_s2 = mean(s2.^2);
   power_s3 = mean(s3.^2);
@@ -51,15 +47,18 @@ function [s1,s2,s3,s4] = FunctionF(lengthF)
   xlabel('second');
   ylabel('volt');
 end
-function power = Fentetre(signal, lengthF)
+
+function power = Fenetre(signal, lengthF)
   N = length(signal);
-  power = [];  
-
-
+  power = []; 
   for i = 1:lengthF:N-lengthF+1
     window = signal(i:i+lengthF-1);  
     windowPower = mean(window.^2);  
-    power = [power, windowPower];    
+    power = [power, windowPower];   
+  end
+  for j = 1:length(power)
+    fprintf('power of window%d is %f\n',j,power(j));
   end
 end
+
 
