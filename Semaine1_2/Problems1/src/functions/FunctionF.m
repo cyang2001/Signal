@@ -1,4 +1,4 @@
-function [s1,s2,s3,s4] = FunctionF(lengthF)
+function [s1,Ts1,s2,Ts2,s3,Ts3,s4,Ts4] = FunctionF(lengthF)
   addpath ../../../Audios
   [s1, Fs1] = audioread("MarteauPiqueur01.mp3");
   [s2, Fs2] = audioread("Jardin01.mp3");
