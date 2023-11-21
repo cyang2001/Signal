@@ -20,4 +20,7 @@ function [y, t2] = FunctionA()
     ylabel('Volt');
     ylim([-2.25,2.25]);
     grid on; 
+    frame = getframe(gcf);
+    im = frame2im(frame);
+    imwrite(im,'../../results/A.png');
 end

@@ -28,4 +28,7 @@ function FunctionC()
   title("Signal in the time domain(x_4)");
   xlabel("second");
   ylabel("volt");
+  frame = getframe(gcf);
+  im = frame2im(frame);
+  imwrite(im, '../../results/C.png');
 end

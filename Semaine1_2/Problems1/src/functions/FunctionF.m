@@ -46,6 +46,9 @@ function [s1,Ts1,s2,Ts2,s3,Ts3,s4,Ts4] = FunctionF()
   title('signal of Vill01');
   xlabel('second');
   ylabel('volt');
+  frame = getframe(gcf);
+  im = frame2im(frame);
+  imwrite(im, '../../results/F.png');
 end
 
 function power = Fenetre(signal, lengthF)

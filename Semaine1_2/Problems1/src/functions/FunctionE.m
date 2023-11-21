@@ -18,6 +18,9 @@ function FunctionE()
   subplot(4,1,4);
   stem(lags_4,c_4);
   grid on;
+  frame = getframe(gcf);
+  im = frame2im(frame);
+  imwrite(im,'../../results/E.png');
 end
 function [autoCorr,m]= MyAutoCorr(s1)
 len = length(s1);

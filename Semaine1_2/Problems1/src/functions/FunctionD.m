@@ -14,4 +14,7 @@ function [x, t] = FunctionD()
   title("signal in the time domaine(x_5)");
   xlabel("second");
   ylabel("volt");
+  frame = getframe(gcf);
+  im = frame2im(frame);
+  imwrite(im, '../../results/D.png')
 end
