@@ -13,7 +13,7 @@ function ProblemI()
       spl_signal = ConvertToSPL(amplified_signal, S);
       duree = length(signal); 
       duree = duree*Ts{i};
-      power_mean_mW = mean(amplified_signal.^2);
+      power_mean_mW = mean(amplified_signal.^2)/1000;
       power_mean_dBm = 10 * log10(power_mean_mW / 0.001);
       rms = sqrt(power_mean_mW);
 
@@ -29,9 +29,9 @@ function ProblemI()
   end
   for i=1:length(resultats)
     fprintf('Signal %d:\n', i);
-    fprintf('  Durée: %.2f s\n', resultats(i).duree);
-    fprintf('  Puissance moyenne: %.2f mW (%.2f dBm)\n', resultats(i).power_mean_mW, resultats(i).power_mean_dBm);
-    fprintf('  RMS: %.2f V\n', resultats(i).rms);
+    fprintf('  Durée: %.4f s\n', resultats(i).duree);
+    fprintf('  Puissance moyenne: %.4f mW (%.2f dBm)\n', resultats(i).power_mean_mW, resultats(i).power_mean_dBm);
+    fprintf('  RMS: %.4f V\n', resultats(i).rms);
     fprintf('  Classe: %s\n', resultats(i).signal_class);
     fprintf('\n');
   end

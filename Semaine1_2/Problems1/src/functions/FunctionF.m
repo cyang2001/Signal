@@ -1,4 +1,4 @@
-function [s1,Ts1,s2,Ts2,s3,Ts3,s4,Ts4] = FunctionF(lengthF)
+function [s1,Ts1,s2,Ts2,s3,Ts3,s4,Ts4] = FunctionF()
   addpath ../../../Audios
   [s1, Fs1] = audioread("MarteauPiqueur01.mp3");
   [s2, Fs2] = audioread("Jardin01.mp3");
@@ -21,10 +21,10 @@ function [s1,Ts1,s2,Ts2,s3,Ts3,s4,Ts4] = FunctionF(lengthF)
   power_s2 = mean(s2.^2);
   power_s3 = mean(s3.^2);
   power_s4 = mean(s4.^2);
-  fprintf('power of s1 is: %f\n', power_s1);
-  fprintf('power of s2 is: %f\n', power_s2);
-  fprintf('power of s3 is: %f\n', power_s3);
-  fprintf('power of s4 is: %f\n', power_s4);
+  fprintf('power of s1 is: %f w\n', power_s1);
+  fprintf('power of s2 is: %f w\n', power_s2);
+  fprintf('power of s3 is: %f w\n', power_s3);
+  fprintf('power of s4 is: %f w\n', power_s4);
   figure;
   subplot(4,1,1);
   plot(t1,s1);
