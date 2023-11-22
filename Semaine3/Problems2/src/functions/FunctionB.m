@@ -16,5 +16,7 @@ function FunctionB()
   plot(f,abs(Y));
   xlabel('Frquence (Hz)');
   ylabel('Amplitude');
-  
+  frame = getframe(gcf);
+  im = frame2im(frame);
+  imwrite(im, '../../results/B.png');
 end

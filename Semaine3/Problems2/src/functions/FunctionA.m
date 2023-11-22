@@ -21,10 +21,12 @@ function FunctionA()
   N = length(y);
   f = (-N/2:N/2-1)*(Fe/N);
   Y_shifted = fftshift(Y);
-
   subplot(2,1,2);
   plot(f,abs(Y_shifted));
   title('fft(f)')
   xlabel('Hz');
   ylabel('amplitude');
+  frame = getframe(gcf);
+  im = frame2im(frame);
+  imwrite(im, '../../results/A.png');
 end
