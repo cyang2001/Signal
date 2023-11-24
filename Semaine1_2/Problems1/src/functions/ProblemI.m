@@ -17,75 +17,84 @@ function ProblemI()
     fprintf('Type of amplified_signal: %s\n', class(amplified_signal));
     fprintf('Size of amplified_signal: %s\n', mat2str(size(amplified_signal)));
     threshold_dBm = FunctionConvertSPLTodBM(P_SPL, S);
-    isLargerThandBm = false;
-    windowSize = 1; 
-    stepSize = 1; 
-    signalTest = [];
-    threshold_dBm = 8;
-    signalTest = generateStaircaseSignal(1/Ts_i);
-    for n = 1:stepSize:length(signalTest) - windowSize + 1
-      currentWindow = signalTest(n:n + windowSize - 1);
-      %current_dBm = FunctionCalculerPowerMeandBM(currentWindow); 
-      current_dBm = mean(currentWindow)
-      if current_dBm >= threshold_dBm
-          if ~isLargerThandBm
-              isLargerThandBm = true;
-              dureeTemp = 0;
-              sonTemp = [];
-          end
-          sonTemp = [sonTemp currentWindow];
-          dureeTemp = dureeTemp + Ts_i * windowSize;
-      else
+    inHighSegment = false;
+    %peux etre changé
+    windowSize = 470; 
+    %peux etre changé
+    stepSize = 470; 
+    dureeTemp1 = 0;  
+    dureeTemp2 = 0;  
+    Ts_i = Ts{i};
+    sonTemp1 = [];
+    sonTemp2 = []; 
+    for n = 1:stepSize:length(amplified_signal) - windowSize + 1
+      currentWindow = amplified_signal(n:n + windowSize - 1);
+      current_dBm = FunctionCalculerPowerMeandBM(currentWindow); 
+      sonTemp2 = [sonTemp2 amplified_signal(n)]; 
+        dureeTemp2 = dureeTemp2 + Ts_i*windowSize;
+        if current_dBm >= threshold_dBm
+            sonTemp1 = [sonTemp1 amplified_signal(n)]; 
+            dureeTemp1 = dureeTemp1 + Ts_i*windowSize;
+            inHighSegment = true;
+            
+        else
           
-          if isLargerThandBm
-              if dureeTemp >= D_t
-                  sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, false);
-              else
-                  sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, true);
-              end
-              isLargerThandBm = false;
-              sonTemp = [];
-              dureeTemp = 0;
-          end
+          if inHighSegment
+                if dureeTemp1 >= D_t
+                    sonStruct = FunctionSupport(i, dureeTemp1, sonTemp1, sonStruct, false);
+                    sonTemp2 = sonTemp2(1:end-length(sonTemp1)+1); 
+                    dureeTemp2 = dureeTemp2 - dureeTemp1; 
+                    if size(sonTemp2) == 0
+                        sonStruct = FunctionSupport(i, dureeTemp2, sonTemp2, sonStruct, true);
+                    end
+                    sonTemp2 = [];
+                    dureeTemp2 = 0;
+                    dureeTemp2 = dureeTemp2 + Ts_i;
+                end
+                sonTemp1 = [];
+                dureeTemp1 = 0;
+                inHighSegment = false;
+            end
       end
     end
-  if isLargerThandBm
-      if dureeTemp >= D_t
-          sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, false);
-      else
-          sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, true);
-      end
-  end
+  if dureeTemp1 >= D_t
+        sonStruct = FunctionSupport(i, dureeTemp1, sonTemp1, sonStruct, false);
+    elseif dureeTemp2 > 0
+        sonStruct = FunctionSupport(i, dureeTemp2, sonTemp2, sonStruct, true);
+    end
   
-
-    figure;
-    subplot(3,1,1);
-    plot(signalTest);
-    subplot(3,1,2);
-    plot(sonStruct.acceptable.signal1.son);
-    subplot(3,1,3);
-    plot(sonStruct.penible.signal1.son);
+    sonStruct.acceptable
+    sonStruct.penible.signal1.duree
     
 end
 
 function sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, isAcceptable)
-    signalN = sprintf('signal%d', i);
-    duree = dureeTemp;
-    son = sonTemp(1:end - 1);
-    p_mW = FunctionCalculerPowerMeanmW(son);
-    p_dBm = FunctionCalculerPowerMeandBM(son);
-    rms = sqrt(p_mW);
+  signalN = sprintf('signal%d', i);
+  duree = dureeTemp;
+  son = sonTemp(1:end - 1);
+  p_mW = FunctionCalculerPowerMeanmW(son);
+  p_dBm = FunctionCalculerPowerMeandBM(son);
+  rms = sqrt(p_mW);
 
-    if isAcceptable
-        sonStruct.acceptable.(signalN) = struct('duree', duree, 'puissance_mW', p_mW, 'puissance_dBm', p_dBm, 'Rms', rms, 'son', son);
-        fprintf("Le signal %d est acceptable\n", i);
-    else
-        sonStruct.penible.(signalN) = struct('duree', duree, 'puissance_mW', p_mW, 'puissance_dBm', p_dBm, 'Rms', rms, 'son', son);
-        fprintf("Le signal %d est penible\n", i);
-    end
+  newSegment = struct('duree', duree, 'puissance_mW', p_mW, 'puissance_dBm', p_dBm, 'Rms', rms, 'son', son);
 
+  if isAcceptable
+      fprintf('acceptable');
+      if isfield(sonStruct.acceptable, signalN)
+
+          sonStruct.acceptable.(signalN)(end+1) = newSegment;
+      else
+          sonStruct.acceptable.(signalN) = newSegment;
+      end
+  else
+      fprintf('penible');
+      if isfield(sonStruct.penible, signalN)
+          sonStruct.penible.(signalN)(end+1) = newSegment;
+      else
+          sonStruct.penible.(signalN) = newSegment;
+      end
+  end
 end
-
 function signal_amplified = FunctionAmplifier(signal, G)
     signal_amplified = signal * 10 ^ (G / 20);
 end
@@ -93,7 +102,7 @@ end
 function P_dbm = FunctionConvertSPLTodBM(P_SPL, S)
     M_ref = 1;
     P_reference = 20 * 10 ^ (-6);
-    P_dbm = 10 * log((M_ref * 10 ^ (S / 20) * P_reference * 10 ^ (P_SPL / 20) * 10^2) ^ 2 * 1000);
+    P_dbm = 10 * log10((M_ref * 10 ^ (S / 20) * P_reference * 10 ^ (P_SPL / 20) * 10^2) ^ 2 * 1000);
 end
 
 function power_mean_dBm = FunctionCalculerPowerMeandBM(signal)
