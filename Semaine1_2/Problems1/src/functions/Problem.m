@@ -45,12 +45,12 @@ function Problem()
             sonTemp1 = [sonTemp1 amplified_signal(n:windowEnd)]; 
             dureeTemp1 = dureeTemp1 + Ts_i*windowSize;
             inHighSegment = true;
-            segmentStartTime = (n - 1 - windowSize) * Ts_i; 
+            segmentStartTime = (n - 1 - windowSize/2) * Ts_i; 
         else
             if inHighSegment
                 if dureeTemp1 >= D_t
-                    segmentEndTime = (n - 1) * Ts_i; 
-                    penibleStartTimes = [penibleStartTimes segmentStartTime];
+                    segmentEndTime = (n - 1 - windowSize/2) * Ts_i; 
+                    penibleStartTimes = [penibleStartTimes segmentStartTime(end)];
                     penibleEndTimes = [penibleEndTimes segmentEndTime];
                     sonStruct = FunctionSupport(i, dureeTemp1, sonTemp1, sonStruct, false, penibleStartTimes(end), penibleEndTimes(end));
                     sonTemp2 = sonTemp2(1:end-length(sonTemp1)+1); 
