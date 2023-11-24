@@ -9,7 +9,7 @@ function ProblemI()
     i = 1;
     sonStruct = struct('acceptable', struct(), 'penible', struct());
     signal = signals{i};
-    amplified_signal = FunctionAmplifier(signal, G);
+    amplified_signal = FunctionAmplifier(signal, G)
     dureeTemp = 0;
     n = 0;
     Ts_i = Ts{i};
@@ -18,24 +18,25 @@ function ProblemI()
     fprintf('Size of amplified_signal: %s\n', mat2str(size(amplified_signal)));
     threshold_dBm = FunctionConvertSPLTodBM(P_SPL, S);
     isLargerThandBm = false;
-    windowSize = 10; 
-    stepSize = 5; 
+    windowSize = 1; 
+    stepSize = 1; 
     signalTest = [];
     threshold_dBm = 8;
-    signalTest = FunctionCreateSignalTest();
+    signalTest = generateStaircaseSignal(1/Ts_i);
     for n = 1:stepSize:length(signalTest) - windowSize + 1
       currentWindow = signalTest(n:n + windowSize - 1);
-      current_dBm = FunctionCalculerPowerMeandBM(currentWindow); 
-  
+      %current_dBm = FunctionCalculerPowerMeandBM(currentWindow); 
+      current_dBm = mean(currentWindow)
       if current_dBm >= threshold_dBm
           if ~isLargerThandBm
               isLargerThandBm = true;
               dureeTemp = 0;
               sonTemp = [];
           end
-          sonTemp = [sonTemp, currentWindow];
+          sonTemp = [sonTemp currentWindow];
           dureeTemp = dureeTemp + Ts_i * windowSize;
       else
+          
           if isLargerThandBm
               if dureeTemp >= D_t
                   sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, false);
@@ -47,7 +48,7 @@ function ProblemI()
               dureeTemp = 0;
           end
       end
-  end
+    end
   if isLargerThandBm
       if dureeTemp >= D_t
           sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, false);
@@ -57,13 +58,14 @@ function ProblemI()
   end
   
 
-    sonStruct.acceptable.signal1
     figure;
-    subplot(2,1,1);
+    subplot(3,1,1);
+    plot(signalTest);
+    subplot(3,1,2);
     plot(sonStruct.acceptable.signal1.son);
-    sonStruct.penible
-    subplot(2,1,2);
+    subplot(3,1,3);
     plot(sonStruct.penible.signal1.son);
+    
 end
 
 function sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, isAcceptable)
@@ -91,7 +93,7 @@ end
 function P_dbm = FunctionConvertSPLTodBM(P_SPL, S)
     M_ref = 1;
     P_reference = 20 * 10 ^ (-6);
-    P_dbm = 10 * log((M_ref * 10 ^ (S / 20) * P_reference * 10 ^ (P_SPL / 20) * 30) ^ 2 * 1000);
+    P_dbm = 10 * log((M_ref * 10 ^ (S / 20) * P_reference * 10 ^ (P_SPL / 20) * 10^2) ^ 2 * 1000);
 end
 
 function power_mean_dBm = FunctionCalculerPowerMeandBM(signal)
@@ -102,10 +104,22 @@ function power_mean_mW = FunctionCalculerPowerMeanmW(signal)
     power_mean_mW = mean(signal .^ 2) / 1000;
 end
 
-function singalTest = FunctionCreateSignalTest()
+function signalTest = generateStaircaseSignal(Fs_i)
+    P_dBm = 8;
+    D_t = 1;
+    sampling_rate = Fs_i;
+
+
+    durations = [2 * D_t, 3 * D_t, 4 * D_t, 3 * D_t]; 
+    amplitudes_dBm = [P_dBm + 1, P_dBm - 2, P_dBm + 3, P_dBm - 1];
+    %amplitudes_mW = 10.^(amplitudes_dBm/10);
     signalTest = [];
-    steps = 5;
-    for i = 1: 1000
-        signalTest = [signalTest, 8*(rem(i,steps))];
+
+
+    for i = 1:length(durations)
+        duration_samples = durations(i) * sampling_rate; 
+        step_signal = amplitudes_dBm(i) * ones(1, duration_samples);
+        signalTest = [signalTest step_signal]; 
     end
 end
+

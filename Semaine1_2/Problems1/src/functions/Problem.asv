@@ -18,38 +18,43 @@ function Problem()
     fprintf('Size of amplified_signal: %s\n', mat2str(size(amplified_signal)));
     threshold_dBm = FunctionConvertSPLTodBM(P_SPL, S);
     isLargerThandBm = false;
-    for n = 1:length(amplified_signal)
-    current_dBm = FunctionCalculerPowerMeandBM(amplified_signal(n));
-    if current_dBm >= threshold_dBm
-        if ~isLargerThandBm
-            isLargerThandBm = true;
-            dureeTemp = 0;
-            sonTemp = [];
-        end
-        sonTemp = [sonTemp amplified_signal(n)];
-        dureeTemp = dureeTemp + Ts_i;
-    else
-        if isLargerThandBm
-            if dureeTemp >= D_t
-                sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, false); 
-            else
-                sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, true); 
-            end
-            isLargerThandBm = false;
-            sonTemp = [];
-            dureeTemp = 0;
-        end
+    for n=1 : length(amplified_signal)
+      dureeTemp
+      current_dBm = FunctionCalculerPowerMeandBM(amplified_signal(n));
+      if current_dBm >= threshold_dBm
+          if ~isLargerThandBm
+              isLargerThandBm = true;
+              dureeTemp = 0; 
+              sonTemp = []; 
+          end
+          sonTemp = [sonTemp amplified_signal(n)];
+          dureeTemp = dureeTemp + Ts_i;
+      else
+          if isLargerThandBm
+              if dureeTemp >= D_t
+                  sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, false);
+                  isLargerThandBm = false;
+                  sonTemp = [];
+                  dureeTemp = 0;
+              else
+                  sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, true);
+                  isLargerThandBm = false;
+                  sonTemp = [];
+                  dureeTemp = 0;
+              end
+          end
+          sonTemp = [sonTemp amplified_signal(n)];
+          dureeTemp = dureeTemp + Ts_i;
+      end
+    end 
+    if isLargerThandBm
+          if dureeTemp >= D_t
+              sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, false);
+          else
+             sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, true);
+          end
     end
 end
-if isLargerThandBm
-    if dureeTemp >= D_t
-        sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, false); 
-    else
-        sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, true); 
-    end
-end
- end
-
 sonStruct.acceptable
 sonStruct.penible
 sonStruct.acceptable.signal1
