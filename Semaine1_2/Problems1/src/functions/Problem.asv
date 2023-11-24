@@ -22,7 +22,7 @@ function Problem()
         current_dBm = FunctionCalculerPowerMeandBM(amplified_signal(n));
         sonTemp2 = [sonTemp2 amplified_signal(n)]; 
         dureeTemp2 = dureeTemp2 + Ts_i;
-        if current_dBm >= threshold_dBm
+        if abs(current_dBm) >= threshold_dBm
             sonTemp1 = [sonTemp1 amplified_signal(n)]; 
             dureeTemp1 = dureeTemp1 + Ts_i;
             inHighSegment = true;
@@ -52,6 +52,7 @@ function Problem()
         sonStruct = FunctionSupport(i, dureeTemp2, sonTemp2, sonStruct, true);
     end
 end
+
 
 
 sonStruct.acceptable
