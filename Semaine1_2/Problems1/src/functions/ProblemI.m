@@ -6,10 +6,10 @@ function ProblemI()
     G = 40; % dB
     P_SPL = 80; % dB SPL
     D_t = 1; % s
-    i = 1;
-    sonStruct = struct('acceptable', struct(), 'penible', struct());
-    signal = signals{i};
-    amplified_signal = FunctionAmplifier(signal, G)
+    i = 1;% only test for singal_1
+    sonStruct = struct('acceptable', struct(), 'penible', struct());% here is a structer for colllect the results
+    signal = signals{i};% take the singal from vector
+    amplified_signal = FunctionAmplifier(signal, G)% amplifier the singal
     dureeTemp = 0;
     n = 0;
     Ts_i = Ts{i};
@@ -36,7 +36,6 @@ function ProblemI()
             sonTemp1 = [sonTemp1 amplified_signal(n)]; 
             dureeTemp1 = dureeTemp1 + Ts_i*windowSize;
             inHighSegment = true;
-            
         else
           
           if inHighSegment
@@ -54,7 +53,7 @@ function ProblemI()
                 sonTemp1 = [];
                 dureeTemp1 = 0;
                 inHighSegment = false;
-            end
+          end
       end
     end
   if dureeTemp1 >= D_t

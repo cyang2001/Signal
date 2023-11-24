@@ -54,10 +54,10 @@ function [s1,Ts1,s2,Ts2,s3,Ts3,s4,Ts4] = FunctionF()
   im = frame2im(frame);
   %imwrite(im, '../../results/F.png');
 figure;
-windowSize = 470;
-p_dBm = calculateWindowedPowerdBm(s1, windowSize);
+windowSize = 20000;
+p_dBm = calculateWindowedPowerdBm(s2, windowSize);
 
-t = (0:(length(p_dBm) - 1)) * (windowSize / Fs1);
+t = (0:(length(p_dBm) - 1)) * (windowSize / Fs2);
 
 plot(t, p_dBm);
 xlabel('Time (s)');

@@ -1,40 +1,61 @@
 function Problem()
-  [s1, Te1, s2, Te2, s3, Te3, s4, Te4] = FunctionF();
+  [s1, Fs1] = audioread("MarteauPiqueur01.mp3");
+  [s2, Fs2] = audioread("Jardin01.mp3");
+  [s3, Fs3] = audioread("Jardin02.mp3");
+  [s4, Fs4] = audioread("Ville01.mp3");
+  Fs3
   signals = {s1, s2, s3, s4};
-  Ts = {Te1, Te2, Te3, Te4};
+  Fs = {Fs1, Fs2, Fs3, Fs4};
+  Ts = {1/Fs1, 1/Fs2, 1/Fs3, 1/Fs4};
   S = -48; % dBV
   G = 40; % dB
   P_SPL = 80; % dB SPL
   D_t = 1; % s
+  windowSize = 37100; 
   sonStruct = struct('acceptable', struct(), 'penible', struct());
   for i = 1:length(signals)
     signal = signals{i};
+
     amplified_signal = FunctionAmplifier(signal, G);
+    %figure;
+    %numWindows = length(amplified_signal) - windowSize + 1; 
+    %t = (0:numWindows-1) * Ts{i};  
+    %plot(t,CalculateWindowedPowerdBm(amplified_signal, windowSize));
+    %title(i);
+
+    %peux etre changé
+    stepSize = 37100; 
     dureeTemp1 = 0;  
     dureeTemp2 = 0;  
     Ts_i = Ts{i};
     sonTemp1 = [];
     sonTemp2 = []; 
-    threshold_dBm = FunctionConvertSPLTodBM(P_SPL, S);
+    penibleStartTimes = [];
+    penibleEndTimes = [];
+    threshold_dBm = FunctionConvertSPLTodBM(P_SPL, S)+G;
     inHighSegment = false;
-
-    for n = 1:length(amplified_signal)
-        current_dBm = FunctionCalculerPowerMeandBM(amplified_signal(n));
-        sonTemp2 = [sonTemp2 amplified_signal(n)]; 
-        dureeTemp2 = dureeTemp2 + Ts_i;
+    segmentStartTime = 0;
+    for n = 1:stepSize:length(amplified_signal) - windowSize + 1
+        windowEnd = min(n + windowSize - 1, length(amplified_signal)); 
+        currentWindow = amplified_signal(n:windowEnd);  
+        current_dBm = CalculateWindowedPowerdBm(currentWindow, length(currentWindow));
+        sonTemp2 = [sonTemp2 amplified_signal(n:windowEnd)]; 
+        dureeTemp2 = dureeTemp2 + Ts_i*windowSize;
         if current_dBm >= threshold_dBm
-            sonTemp1 = [sonTemp1 amplified_signal(n)]; 
-            dureeTemp1 = dureeTemp1 + Ts_i;
+            sonTemp1 = [sonTemp1 amplified_signal(n:windowEnd)]; 
+            dureeTemp1 = dureeTemp1 + Ts_i*windowSize;
             inHighSegment = true;
+            segmentStartTime = (n - 1 - windowSize) * Ts_i; 
         else
             if inHighSegment
                 if dureeTemp1 >= D_t
-                    sonStruct = FunctionSupport(i, dureeTemp1, sonTemp1, sonStruct, false);
+                    segmentEndTime = (n - 1) * Ts_i; 
+                    penibleStartTimes = [penibleStartTimes segmentStartTime];
+                    penibleEndTimes = [penibleEndTimes segmentEndTime];
+                    sonStruct = FunctionSupport(i, dureeTemp1, sonTemp1, sonStruct, false, penibleStartTimes(end), penibleEndTimes(end));
                     sonTemp2 = sonTemp2(1:end-length(sonTemp1)+1); 
                     dureeTemp2 = dureeTemp2 - dureeTemp1; 
-                    if size(sonTemp2) == 0
-                        sonStruct = FunctionSupport(i, dureeTemp2, sonTemp2, sonStruct, true);
-                    end
+                    sonStruct = FunctionSupport(i, dureeTemp2, sonTemp2, sonStruct, true, 0, 0);
                     sonTemp2 = [];
                     dureeTemp2 = 0;
                     dureeTemp2 = dureeTemp2 + Ts_i;
@@ -47,21 +68,43 @@ function Problem()
     end
 
     if dureeTemp1 >= D_t
-        sonStruct = FunctionSupport(i, dureeTemp1, sonTemp1, sonStruct, false);
+        sonStruct = FunctionSupport(i, dureeTemp1, sonTemp1, sonStruct, false, penibleStartTimes, penibleEndTimes);
     elseif dureeTemp2 > 0
-        sonStruct = FunctionSupport(i, dureeTemp2, sonTemp2, sonStruct, true);
+        sonStruct = FunctionSupport(i, dureeTemp2, sonTemp2, sonStruct, true, 0, 0);
     end
 end
 
 
 sonStruct.acceptable
 sonStruct.penible
-sonStruct.acceptable.signal1.duree
-sonStruct.penible.signal1
-figure;
+penibleSegments = [];
+for i = 1:length(sonStruct.penible.signal3)
+    penibleSegments = [penibleSegments, sonStruct.penible.signal3(i).startTime, sonStruct.penible.signal3(i).endTime];
 end
 
-function sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, isAcceptable)
+penibleSegments
+amplified_signal = FunctionAmplifier(s3, G);
+t = (0:length(amplified_signal)-1) * Ts{3};  
+figure;
+subplot(2,1,1);
+plot(t,amplified_signal);
+hold on;
+for j = 1:2:length(penibleSegments)-1
+    startTime = penibleSegments(j);
+    endTime = penibleSegments(j+1);
+    x = [startTime, endTime, endTime, startTime];
+    y = [min(amplified_signal), min(amplified_signal), max(amplified_signal), max(amplified_signal)];
+    patch(x, y, 'red', 'EdgeColor', 'none', 'FaceAlpha', 0.3);
+end
+
+subplot(2,1,2);
+numWindows = length(amplified_signal) - windowSize + 1; 
+t = (0:numWindows-1) * Ts{3};  
+plot(t,CalculateWindowedPowerdBm(s3, windowSize));
+yline(FunctionConvertSPLTodBM(P_SPL,S), 'r--');
+end
+
+function sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, isAcceptable,penibleStartTimes, penibleEndTimes)
   signalN = sprintf('signal%d', i);
   duree = dureeTemp;
   son = sonTemp(1:end - 1);
@@ -70,7 +113,7 @@ function sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, isAccepta
   rms = sqrt(p_mW);
 
   newSegment = struct('duree', duree, 'puissance_mW', p_mW, 'puissance_dBm', p_dBm, 'Rms', rms, 'son', son);
-
+  newSegmentPenible = struct('duree', duree, 'puissance_mW', p_mW, 'puissance_dBm', p_dBm, 'Rms', rms, 'son', son ,'startTime', penibleStartTimes, 'endTime', penibleEndTimes);
   if isAcceptable
       if isfield(sonStruct.acceptable, signalN)
           sonStruct.acceptable.(signalN)(end+1) = newSegment;
@@ -79,9 +122,9 @@ function sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, isAccepta
       end
   else
       if isfield(sonStruct.penible, signalN)
-          sonStruct.penible.(signalN)(end+1) = newSegment;
+          sonStruct.penible.(signalN)(end+1) = newSegmentPenible;
       else
-          sonStruct.penible.(signalN) = newSegment;
+          sonStruct.penible.(signalN) = newSegmentPenible;
       end
   end
 end
@@ -106,14 +149,17 @@ function power_mean_mW = FunctionCalculerPowerMeanmW(signal)
 end
 
 function p_dBm = CalculateWindowedPowerdBm(signal, windowSize)
-    numWindows = floor(length(signal) / windowSize);
+    signalLength = length(signal);
+    numWindows = signalLength - windowSize + 1;  
     p_mW = zeros(1, numWindows);
     
     for i = 1:numWindows
-        windowStart = (i - 1) * windowSize + 1;
-        windowEnd = i * windowSize;
+        windowStart = i;
+        windowEnd = i + windowSize - 1;
         window = signal(windowStart:windowEnd);
         p_mW(i) = mean(window.^2);
     end
+
     p_dBm = 10 * log10(p_mW / 0.001);
 end
+
