@@ -10,49 +10,54 @@ function Problem()
   for i = 1:length(signals)
     signal = signals{i};
     amplified_signal = FunctionAmplifier(signal, G);
-    dureeTemp = 0;
-    n = 0;
+    dureeTemp1 = 0;  
+    dureeTemp2 = 0;  
     Ts_i = Ts{i};
-    sonTemp = [];
-    fprintf('Type of amplified_signal: %s\n', class(amplified_signal));
-    fprintf('Size of amplified_signal: %s\n', mat2str(size(amplified_signal)));
+    sonTemp1 = [];
+    sonTemp2 = []; 
     threshold_dBm = FunctionConvertSPLTodBM(P_SPL, S);
-    isLargerThandBm = false;
+    inHighSegment = false;
+
     for n = 1:length(amplified_signal)
-    current_dBm = FunctionCalculerPowerMeandBM(amplified_signal(n));
-    if current_dBm >= threshold_dBm
-        if ~isLargerThandBm
-            isLargerThandBm = true;
-            dureeTemp = 0;
-            sonTemp = [];
-        end
-        sonTemp = [sonTemp amplified_signal(n)];
-        dureeTemp = dureeTemp + Ts_i;
-    else
-        if isLargerThandBm
-            if dureeTemp >= D_t
-                sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, false); 
-            else
-                sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, true); 
+        current_dBm = FunctionCalculerPowerMeandBM(amplified_signal(n));
+        sonTemp2 = [sonTemp2 amplified_signal(n)]; 
+        dureeTemp2 = dureeTemp2 + Ts_i;
+        if abs(current_dBm) >= threshold_dBm
+            sonTemp1 = [sonTemp1 amplified_signal(n)]; 
+            dureeTemp1 = dureeTemp1 + Ts_i;
+            inHighSegment = true;
+        else
+            if inHighSegment
+                if dureeTemp1 >= D_t
+                    sonStruct = FunctionSupport(i, dureeTemp1, sonTemp1, sonStruct, false);
+                    sonTemp2 = sonTemp2(1:end-length(sonTemp1)+1); 
+                    dureeTemp2 = dureeTemp2 - dureeTemp1; 
+                    if size(sonTemp2) == 0
+                        sonStruct = FunctionSupport(i, dureeTemp2, sonTemp2, sonStruct, true);
+                    end
+                    sonTemp2 = [];
+                    dureeTemp2 = 0;
+                    dureeTemp2 = dureeTemp2 + Ts_i;
+                end
+                sonTemp1 = [];
+                dureeTemp1 = 0;
+                inHighSegment = false;
             end
-            isLargerThandBm = false;
-            sonTemp = [];
-            dureeTemp = 0;
         end
     end
-end
-if isLargerThandBm
-    if dureeTemp >= D_t
-        sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, false); 
-    else
-        sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, true); 
+
+    if dureeTemp1 >= D_t
+        sonStruct = FunctionSupport(i, dureeTemp1, sonTemp1, sonStruct, false);
+    elseif dureeTemp2 > 0
+        sonStruct = FunctionSupport(i, dureeTemp2, sonTemp2, sonStruct, true);
     end
 end
- end
+
+
 
 sonStruct.acceptable
 sonStruct.penible
-sonStruct.acceptable.signal1
+sonStruct.acceptable.signal1.duree
 sonStruct.penible.signal1
 end
 
@@ -72,14 +77,14 @@ function sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, isAccepta
       else
           sonStruct.acceptable.(signalN) = newSegment;
       end
-      fprintf("Le signal %d est acceptable\n", i);
+      %fprintf("Le signal %d est acceptable\n", i);
   else
       if isfield(sonStruct.penible, signalN)
           sonStruct.penible.(signalN)(end+1) = newSegment;
       else
           sonStruct.penible.(signalN) = newSegment;
       end
-      fprintf("Le signal %d est penible\n", i);
+      %fprintf("Le signal %d est penible\n", i);
   end
 end
 

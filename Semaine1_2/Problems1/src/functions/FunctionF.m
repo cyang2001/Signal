@@ -27,25 +27,29 @@ function [s1,Ts1,s2,Ts2,s3,Ts3,s4,Ts4] = FunctionF()
   %fprintf('power of s4 is: %f w\n', power_s4);
   figure;
   subplot(4,1,1);
+  s1_dBm = FunctionCalculerPowerMeandBM(s1)
   plot(t1,s1);
   title('signal of MarteauPiqueur01')
   xlabel('second');
-  ylabel('volt');
+  ylabel('v');
+  s2_dBm = FunctionCalculerPowerMeandBM(s2)
   subplot(4,1,2);
   plot(t2,s2);
   title('signal of Jardin01');
   xlabel('second');
-  ylabel('volt');
+  ylabel('v');
+  s3_dBm = FunctionCalculerPowerMeandBM(s3);
   subplot(4,1,3);
   plot(t3,s3);
   title('signal of Jardin02');
   xlabel('second');
-  ylabel('volt');
+  ylabel('v');
+  s4_dBm = FunctionCalculerPowerMeandBM(s4);
   subplot(4,1,4);
   plot(t4,s4);
   title('signal of Vill01');
   xlabel('second');
-  ylabel('volt');
+  ylabel('v');
   frame = getframe(gcf);
   im = frame2im(frame);
   %imwrite(im, '../../results/F.png');
@@ -65,4 +69,10 @@ function power = Fenetre(signal, lengthF)
   %fprintf('mean of power is %f\n',mean(power));
 end
 
+function power_mean_dBm = FunctionCalculerPowerMeandBM(signal)
+  power_mean_dBm = 10 * log10(FunctionCalculerPowerMeanmW(signal) / 0.001);
+end
 
+function power_mean_mW = FunctionCalculerPowerMeanmW(signal)
+  power_mean_mW = mean(signal .^ 2) / 1000;
+end
