@@ -21,8 +21,7 @@ function ProblemI()
     windowSize = 10; 
     stepSize = 5; 
     signalTest = [];
-    threshold_dBm = 8;
-    signalTest = FunctionCreateSignalTest();
+    signalTest = FunctionCreateSignalTest(threshold_dBm)
     for n = 1:stepSize:length(signalTest) - windowSize + 1
       currentWindow = signalTest(n:n + windowSize - 1);
       current_dBm = FunctionCalculerPowerMeandBM(currentWindow); 
@@ -102,10 +101,11 @@ function power_mean_mW = FunctionCalculerPowerMeanmW(signal)
     power_mean_mW = mean(signal .^ 2) / 1000;
 end
 
-function singalTest = FunctionCreateSignalTest()
+function singalTest = FunctionCreateSignalTest(amplitude)
     signalTest = [];
     steps = 5;
-    for i = 1: 1000
-        signalTest = [signalTest, 8*(rem(i,steps))];
+    stepsDuration = 1000;
+    for s = steps
+        signalTest[signalTest, amplitude*(s+1)*stepsDuration];
     end
 end
