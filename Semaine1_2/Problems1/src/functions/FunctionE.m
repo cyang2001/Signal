@@ -51,4 +51,3 @@ function [interCorr,m] = MyInterCorr(s1, s2)
   end
   m = -N+1:N-1;
 end
-
