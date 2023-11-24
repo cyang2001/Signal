@@ -18,7 +18,7 @@ function ProblemI()
     fprintf('Size of amplified_signal: %s\n', mat2str(size(amplified_signal)));
     threshold_dBm = FunctionConvertSPLTodBM(P_SPL, S);
     isLargerThandBm = false;
-    windowSize = 1/Te1; 
+    windowSize = 100; 
     stepSize = 10; 
 
     for n = 1:stepSize:length(amplified_signal) - windowSize + 1
@@ -89,10 +89,8 @@ end
 
 function power_mean_dBm = FunctionCalculerPowerMeandBM(signal)
     power_mean_dBm = 10 * log10(FunctionCalculerPowerMeanmW(signal) / 0.001);
-    fprintf('Power mean dBm: %d\n', power_mean_dBm);
 end
 
 function power_mean_mW = FunctionCalculerPowerMeanmW(signal)
     power_mean_mW = mean(signal .^ 2) / 1000;
-    fprintf('Power mean mW: %d\n', power_mean_mW);
 end
