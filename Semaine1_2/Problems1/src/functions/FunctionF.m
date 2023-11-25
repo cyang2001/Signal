@@ -53,12 +53,26 @@ function [s1,Ts1,s2,Ts2,s3,Ts3,s4,Ts4] = FunctionF()
   frame = getframe(gcf);
   im = frame2im(frame);
   %imwrite(im, '../../results/F.png');
+for i=1:4
 figure;
-windowSize = 20000;
-p_dBm = calculateWindowedPowerdBm(s2, windowSize);
-
-t = (0:(length(p_dBm) - 1)) * (windowSize / Fs2);
-
+windowSize = 38000;
+if i == 1
+    p_dBm = calculateWindowedPowerdBm(s1, windowSize);
+    Fs = Fs1;
+    t = (0:(length(p_dBm) - 1)) * (windowSize / Fs1);
+elseif i == 2
+    p_dBm = calculateWindowedPowerdBm(s2, windowSize);
+    Fs = Fs2;
+    t = (0:(length(p_dBm) - 1)) * (windowSize / Fs2);
+elseif i == 3
+    p_dBm = calculateWindowedPowerdBm(s3, windowSize);
+    Fs = Fs3;
+    t = (0:(length(p_dBm) - 1)) * (windowSize / Fs3);
+elseif i == 4
+    p_dBm = calculateWindowedPowerdBm(s4, windowSize);
+    Fs = Fs4;
+    t = (0:(length(p_dBm) - 1)) * (windowSize / Fs4);
+end
 plot(t, p_dBm);
 xlabel('Time (s)');
 ylabel('Power (dBm)');
@@ -67,6 +81,8 @@ hold on;
 yline(8, 'r--');
 hold off;
 grid on;
+end
+
 
 end
 
@@ -92,15 +108,17 @@ function power_mean_mW = FunctionCalculerPowerMeanmW(signal)
   power_mean_mW = mean(signal .^ 2) / 1000;
 end
 function p_dBm = calculateWindowedPowerdBm(signal, windowSize)
-    numWindows = floor(length(signal) / windowSize);
+    signalLength = length(signal);
+    numWindows = signalLength - windowSize + 1;  
     p_mW = zeros(1, numWindows);
     
     for i = 1:numWindows
-        windowStart = (i - 1) * windowSize + 1;
-        windowEnd = i * windowSize;
+        windowStart = i;
+        windowEnd = i + windowSize - 1;
         window = signal(windowStart:windowEnd);
         p_mW(i) = mean(window.^2);
     end
+
     p_dBm = 10 * log10(p_mW / 0.001);
 end
 

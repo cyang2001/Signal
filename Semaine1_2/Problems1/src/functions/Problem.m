@@ -40,16 +40,16 @@ function Problem()
         currentWindow = amplified_signal(n:windowEnd);  
         current_dBm = CalculateWindowedPowerdBm(currentWindow, length(currentWindow));
         sonTemp2 = [sonTemp2 amplified_signal(n:windowEnd)]; 
-        dureeTemp2 = dureeTemp2 + Ts_i*windowSize;
+        dureeTemp2 = dureeTemp2 + Ts_i*stepSize;
         if current_dBm >= threshold_dBm
             sonTemp1 = [sonTemp1 amplified_signal(n:windowEnd)]; 
-            dureeTemp1 = dureeTemp1 + Ts_i*windowSize;
+            dureeTemp1 = dureeTemp1 + Ts_i*stepSize;
             inHighSegment = true;
-            segmentStartTime = (n - 1 - windowSize/2) * Ts_i; 
+            segmentStartTime = (n - 1 - stepSize/2) * Ts_i; 
         else
             if inHighSegment
                 if dureeTemp1 >= D_t
-                    segmentEndTime = (n - 1 - windowSize/2) * Ts_i; 
+                    segmentEndTime = (n - 1) * Ts_i; 
                     penibleStartTimes = [penibleStartTimes segmentStartTime(end)];
                     penibleEndTimes = [penibleEndTimes segmentEndTime];
                     sonStruct = FunctionSupport(i, dureeTemp1, sonTemp1, sonStruct, false, penibleStartTimes(end), penibleEndTimes(end));
@@ -77,31 +77,38 @@ end
 
 sonStruct.acceptable
 sonStruct.penible
-penibleSegments = [];
-for i = 1:length(sonStruct.penible.signal3)
-    penibleSegments = [penibleSegments, sonStruct.penible.signal3(i).startTime, sonStruct.penible.signal3(i).endTime];
+for i = 1:length(signals)
+    penibleSegments = [];
+    for k = 1:length(sonStruct.penible.(['signal' num2str(i)]))
+        penibleSegments = [penibleSegments, sonStruct.penible.(['signal' num2str(i)])(k).startTime, sonStruct.penible.(['signal' num2str(i)])(k).endTime];
+    end
+    
 end
 
-penibleSegments
-amplified_signal = FunctionAmplifier(s3, G);
-t = (0:length(amplified_signal)-1) * Ts{3};  
-figure;
-subplot(2,1,1);
-plot(t,amplified_signal);
-hold on;
-for j = 1:2:length(penibleSegments)-1
-    startTime = penibleSegments(j);
-    endTime = penibleSegments(j+1);
-    x = [startTime, endTime, endTime, startTime];
-    y = [min(amplified_signal), min(amplified_signal), max(amplified_signal), max(amplified_signal)];
-    patch(x, y, 'red', 'EdgeColor', 'none', 'FaceAlpha', 0.3);
+for i =1 : length(signals)
+        penibleSegments = [];
+        for k = 1:length(sonStruct.penible.(['signal' num2str(i)]))
+            penibleSegments = [penibleSegments, sonStruct.penible.(['signal' num2str(i)])(k).startTime, sonStruct.penible.(['signal' num2str(i)])(k).endTime];
+        end
+        amplified_signal = FunctionAmplifier(signals{i}, G);
+        t = (0:length(amplified_signal)-1) * Ts{i};  
+        figure;
+        subplot(2,1,1);
+        plot(t,amplified_signal);
+        hold on;
+        for j = 1:2:length(penibleSegments)-1
+            startTime = penibleSegments(j);
+            endTime = penibleSegments(j+1);
+            x = [startTime, endTime, endTime, startTime];
+            y = [min(amplified_signal), min(amplified_signal), max(amplified_signal), max(amplified_signal)];
+            patch(x, y, 'red', 'EdgeColor', 'none', 'FaceAlpha', 0.3);
+        end
+        numWindows = length(amplified_signal) - windowSize + 1; 
+        subplot(2,1,2);
+        t = (0:numWindows-1) * Ts{i};  
+        plot(t,CalculateWindowedPowerdBm(signals{i}, windowSize));
+        yline(FunctionConvertSPLTodBM(P_SPL,S), 'r--');
 end
-
-subplot(2,1,2);
-numWindows = length(amplified_signal) - windowSize + 1; 
-t = (0:numWindows-1) * Ts{3};  
-plot(t,CalculateWindowedPowerdBm(s3, windowSize));
-yline(FunctionConvertSPLTodBM(P_SPL,S), 'r--');
 end
 
 function sonStruct = FunctionSupport(i, dureeTemp, sonTemp, sonStruct, isAcceptable,penibleStartTimes, penibleEndTimes)
