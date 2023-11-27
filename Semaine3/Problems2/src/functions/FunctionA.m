@@ -2,27 +2,28 @@ function FunctionA()
   Fe = 8000;
   Te = 1/Fe;
   y = [];
-  D = 8;%8ms
-  t = 0:Te:D;
+  D = 0.006;
+  n = 1 : 480;
+  t = Te*n;
   for temp = t
-    if((0<=temp) && (temp<=5))
-      y = [y,1];
+    if((0<=temp) && (temp<=0.005))
+      y = [y 1];
     else
-      y = [y,0];
+      y = [y 0];
     end
   end
   figure;
   subplot(2,1,1);
   plot(t,y);
   title('y(n)')
-  xlabel('ms');
-  ylim([-0.5,1.5]);
+  xlabel('s');
   Y = fft(y);
   N = length(y);
-  f = (-N/2:N/2-1)*(Fe/N);
-  Y_shifted = fftshift(Y);
+  f = (0:N-1)*(Fe/N);
+  %Y_shifted = fftshift(Y);
   subplot(2,1,2);
-  plot(f,abs(Y_shifted));
+  plot(f,abs(Y));
+  xlim([0 4000]);
   title('fft(f)')
   xlabel('Hz');
   ylabel('amplitude');
