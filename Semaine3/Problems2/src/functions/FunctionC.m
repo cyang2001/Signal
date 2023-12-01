@@ -50,9 +50,10 @@ function FunctionC()
         ylabel('Power/Frequency (dB/Hz)');
         title(['Power Spectral Density of the Signal ', titles{i}]);
         f0 = CalculateFundamentalFrequency(audioSignal{i}, Fs{i});
-        [fh, nh] = CalculateHarmonics(audioSignal{i}, Fs{i});
+        
         VerifyParseval(audioSignal{i}, Fs{i});
         f0_autocorr = AutocorrelationFundamentalFrequency(audioSignal{i}, Fs{i});
+        [fh, nh] = CalculateHarmonics(audioSignal{i}, Fs{i}, f0_autocorr);
         disp([titles{i},' Fundamental Frequency from FFT: ', num2str(f0)]);
         disp([titles{i},' Fundamental Frequency from Autocorrelation: ', num2str(f0_autocorr)]);
         disp(['begining of ', titles{i}, ' is ', num2str(startTemp), ' ending of ' ,titles{i}, ' is ', num2str(endTemp)]);
@@ -115,24 +116,33 @@ function f0 = CalculateFundamentalFrequency(signal, fs)
     [~, loc] = max(P1);
     f0 = f(loc);
 end
-function [fh, nh] = CalculateHarmonics(signal, fs)
-    N = length(signal);
-    Y = fft(signal, N);
-    P2 = abs(Y/N);
-    P1 = P2(1:N/2+1);
-    
-    totalPower = sum(P1.^2);
-    cumulativePower = cumsum(P1.^2);
-    
-    fhIndex = find(cumulativePower >= 0.9999 * totalPower, 1, 'first');
-    f = fs*(0:(N/2))/N;
-    fh = f(fhIndex);
-    P1_dB = 20*log10(P1 + eps); 
-    
-    [~, f0_index] = max(P1);
-    
-    nh = sum(P1_dB > -40 & (1:length(P1_dB))' ~= f0_index);
+function [fh, nh] = CalculateHarmonics(signal, fs, f0)
+  N = length(signal);
+  Y = fft(signal, N);
+  P2 = abs(Y/N);
+  P1 = P2(1:N/2+1);
+  
+  f = fs*(0:(N/2))/N;
+  
+  [maxSpectrum, ~] = max(P1);
+  maxSpectrum_dB = 20*log10(maxSpectrum);
+
+  threshold_dB = maxSpectrum_dB - 40;
+  fmax_index = find(20*log10(P1) >= threshold_dB, 1, 'last');
+  fmax = f(fmax_index);
+
+  nh = 0;
+  fh = [];
+  for n = 1:floor(fmax/f0)
+      harmonicFreq = n * f0;
+      [~, harmonicIndex] = min(abs(f-harmonicFreq));
+      if f(harmonicIndex) <= fmax && P1(harmonicIndex) >= 0.1 * maxSpectrum
+          nh = nh + 1;
+          fh = [fh f(harmonicIndex)];
+      end
+  end
 end
+
 
 
 
