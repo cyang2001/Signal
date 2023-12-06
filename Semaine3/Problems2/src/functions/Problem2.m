@@ -21,15 +21,44 @@ function Problem2()
         xlabel('Time (s)');
         ylabel('W');
         title('Audio Signal in Time Domain');
+
+        %Detect note begin and end times
         [startTime, endTime] = DetectNoteTimes(p_W, Fs{i}, max(p_W));
-        avgPower = CalculateAveragePower(audioSignal{i}, Fs{i}, startTime, endTime);
+        startTemp = [];
+        endTemp = [];
+        for j = 1:length(startTime)
+            if endTime(j) - startTime(j) >= 1
+                startTemp = [startTemp, startTime(j)];
+                endTemp = [endTemp, endTime(j)];
+            end
+        end
+        disp(['The begining of this signal is :', num2str(startTemp), ' ending is :', num2str(endTemp)]);
+
+        %Calculate average power  P
+        avgPower = CalculateAveragePower(audioSignal{i}, Fs{i}, startTemp, endTemp);
+
+        disp(['The average power of this note is :', num2str(avgPower), 'W']);
+
+        %Calculate fundamental frequency
+        f0 = AutocorrelationFundamentalFrequency(audioSignal{i}, Fs{i});
+
+        disp(['The fundamental frequency of this note is :', num2str(f0), 'Hz']);
+
+        %Calculate harmonics
+        [fh, nh] = CalculateHarmonics(audioSignal{i}, Fs{i});
+        disp(['The frequency of the highest harmonic of this note is :', num2str(fh), 'Hz']);
+        disp(['The number of harmonics of this note is :', num2str(nh)]);
+
         subplot(2,1,2);
         N = length(audioSignal{i});
         Y = fft(audioSignal{i});
+        P2 = abs(Y/N).^2; 
         f = (0:N-1)*(Fs{i}/N);
-        plot(f, Y);
-        f0 = CalculateFundamentalFrequency(audioSignal{i}, Fs{i});
-        [fh, nh] = CalculateHarmonics(audioSignal{i}, Fs{i});
+        plot(f(1:N/2+1), P2(1:N/2+1)); 
+        xlabel('Frequency (Hz)');
+        ylabel('Power/Frequency (dB/Hz)');
+        title('Power Spectral Density of the Signal ');
+
     end
     
 end
@@ -99,5 +128,20 @@ function [fh, nh] = CalculateHarmonics(signal, fs)
     f = fs*(0:(N/2))/N;
     fh = f(fhIndex);
     nh = sum(P1 > 0.01 * max(P1));  % Arbitrary threshold for harmonic counting
+end
+
+function f0_autocorr = AutocorrelationFundamentalFrequency(signal, fs)
+    [autocorr, lags] = xcorr(signal, 'coeff');
+    positiveLags = lags >= 0;
+    positiveAutocorr = autocorr(positiveLags);
+    positiveLags = lags(positiveLags);
+    
+    [pks, locs] = findpeaks(positiveAutocorr, 'MinPeakProminence', 0.3, 'MinPeakDistance', fs/20);
+    if ~isempty(locs)
+        peakLag = positiveLags(locs(1));
+        f0_autocorr = fs / peakLag;
+    else
+        f0_autocorr = NaN;
+    end
 end
 

@@ -32,7 +32,7 @@ function FunctionC()
             end
         end
 
-        avgPower = CalculateAveragePower(audioSignal{i}, Fs{i}, startTime, endTime);
+        avgPower = CalculateAveragePower(audioSignal{i}, Fs{i}, startTemp, endTemp);
         desiredResolution = 0.2;  
         Nfft = ceil(Fs{i} / desiredResolution); 
         
@@ -63,33 +63,34 @@ function FunctionC()
 end
 
 function p_W = CalculateWindowedPowerSliding(signal, windowSize)
-    % Calculate the power of the given signal in dBm using a sliding window
-    % approach. This function smoothens the power calculation and converts 
-    % it to dBm format.
-    
-    % Length of the signal
-    signalLength = length(signal);
+  % Calculate the power of the given signal in dBm using a sliding window
+  % approach. This function smoothens the power calculation and converts 
+  % it to dBm format.
+  
+  % Length of the signal
+  signalLength = length(signal);
 
-    % Number of windows based on the signal length and window size
-    numWindows = signalLength - windowSize + 1;  
+  % Number of windows based on the signal length and window size
+  numWindows = signalLength - windowSize + 1;  
 
-    % Initialize an array to store the power values for each window
-    p_mW = zeros(1, numWindows);
+  % Initialize an array to store the power values for each window
+  p_mW = zeros(1, numWindows);
 
-    % Calculate the power for the first window
-    window = signal(1:windowSize);
-    currentPower = mean(window.^2);  % Mean power of the first window
-    p_mW(1) = currentPower;
+  % Calculate the power for the first window
+  window = signal(1:windowSize);
+  currentPower = mean(window.^2);  % Mean power of the first window
+  p_mW(1) = currentPower;
 
-    % Iteratively calculate the power for the remaining windows
-    for i = 2:numWindows
-        % Update the power by adding the new element and subtracting the old
-        currentPower = currentPower - signal(i - 1)^2 / windowSize + signal(i + windowSize - 1)^2 / windowSize;
-        p_mW(i) = currentPower;
-    end
-    p_W = p_mW/0.001;
-    
+  % Iteratively calculate the power for the remaining windows
+  for i = 2:numWindows
+      % Update the power by adding the new element and subtracting the old
+      currentPower = currentPower - signal(i - 1)^2 / windowSize + signal(i + windowSize - 1)^2 / windowSize;
+      p_mW(i) = currentPower;
+  end
+  p_W = p_mW/0.001;
+  
 end
+
 
 function [startTime, endTime] = DetectNoteTimes(audioSignal, fs, max)
   threshold = 0.01*max;
@@ -142,9 +143,6 @@ function [fh, nh] = CalculateHarmonics(signal, fs, f0)
       end
   end
 end
-
-
-
 
 function VerifyParseval(signal, fs)
     powerTimeDomain = sum(signal.^2) / length(signal);
