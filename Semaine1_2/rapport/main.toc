@@ -1,7 +1,0 @@
-\contentsline {section}{\numberline {1}Introduction}{4}{}%
-\contentsline {section}{\numberline {2}Méthod}{5}{}%
-\contentsline {subsection}{\numberline {2.1}Detection du signal utile}{5}{}%
-\contentsline {subsection}{\numberline {2.2}Synchronisation}{5}{}%
-\contentsline {subsection}{\numberline {2.3}Decodage}{5}{}%
-\contentsline {section}{\numberline {3}Resultats Experimentaux}{6}{}%
-\contentsline {section}{\numberline {4}Conclusion}{7}{}%
