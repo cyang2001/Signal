@@ -17,7 +17,7 @@ function Problem2()
     notesFlute = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "G#", "A", "Bb", "B"];
     octaves = ['0', '1', '2', '3', '4', '5', '6', '7'];
     [tablePiano, tableViolin, tableFlute] = GenerateFrequencyTables();
-
+    
     for i = 1:length(audioSignal)
         windowSize = 20000;
         p_W = CalculateWindowedPowerSliding(audioSignal{i}, windowSize);
