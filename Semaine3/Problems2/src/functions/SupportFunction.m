@@ -5,4 +5,4 @@ function SupportFunction()
     plot(t, s1);
     xlabel('Time (s)');
     ylabel('Amplitude');
-end
+end 
