@@ -1,10 +1,1 @@
-On propose une méthode de détection et de catégorisation des notes, qui permet de classer l'instrument sur lequel la note est jouée (violon, flûte, piano) dont les caractéristiques sont les suivantes: 
-\begin{itemize}
-  \item $t_d,t_f$: instants de début et de fin de la note
-  \item $P_dBm$: la puissance moyenne du signal en dBm.
-  \item $f_0$: la fréquence fondamentale et le nom et l'octave de la note jouée(pas encore fini, manque le nom de la note et l'octave)
-  \item $f_h$: la fréquence haute telle que [0,$f_h$] contient 99\% de la puissance
-  \item $n_h$: le nombre d'harmoniques dans cette bande de fréquences
-\end{itemize}
-Les signaux sont en stéréo, du coup on moyenne les signaux. \\
-Pour détecter le son utile, on détecte les plages de son de puissance supérieure à 1\%  de la puissance maximale (en W), puis ne garde que celles de durée supérieure à une seconde. \\
+Nous proposons une approche novatrice visant à élaborer un algorithme de détection et de caractérisation des notes de musique jouées par divers instruments tels que le violon, la flûte et le piano, tout en déterminant précisément leur hauteur. Notre algorithme est conçu pour générer des sorties exhaustives, incluant les instants de début et de fin de chaque note ($t_d$,$t_f$), la puissance moyenne du signal en dBm ($P_{dBm}$), la fréquence fondamentale ($f_0$) accompagnée du nom et de l’octave de la note jouée, la fréquence haute $f_h$ définie par [0, $f_h$] englobant 99.99\% de la puissance, le nombre d’harmoniques dans cette bande de fréquences ($n_h$), ainsi que toute autre caractéristique jugée pertinente pour classifier les notes selon l'instrument de musique. Nous adopterons la méthode de détection d’un son utile du PBI (Produit de l'analyse du Bruit Instantané) pour élaborer notre algorithme, en nous appuyant sur une approche en trois étapes. Cette méthodologie implique la détection du signal sonore, la synchronisation du récepteur par la détection de l'en-tête, et enfin, le décodage des informations pertinentes pour caractériser chaque note. 
