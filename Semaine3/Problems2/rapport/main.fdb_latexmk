@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1702386274 "/Users/gregyoungforever/Documents/ISEP2023-2024/Signal/Semaine3/Problems2/rapport/main.tex" "main.pdf" "main" 1702386275
+["pdflatex"] 1702386637 "/Users/gregyoungforever/Documents/ISEP2023-2024/Signal/Semaine3/Problems2/rapport/main.tex" "main.pdf" "main" 1702386637
   "/Users/gregyoungforever/Documents/ISEP2023-2024/Signal/Semaine3/Problems2/rapport/main.tex" 1702386146 1327 5447f6736dd2b8863f04439860635e6f ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -52,13 +52,13 @@
   "lectures/Introduction.tex" 1702379517 1208 6ee431b309edcc9e44e6d4d3ad1fa9c6 ""
   "lectures/Méthode/Acquisition_et_Prétraitement_du_Signal.tex" 1702386274 529 8db5d5d7d4945b8923683408c9b16c4c ""
   "lectures/Méthode/Analyse_des_Harmoniques.tex" 0 -1 0 ""
-  "lectures/Méthode/Détection_des_Notes.tex" 1702386049 666 916595f57d097b450eac12de2993e2bf ""
-  "lectures/Méthode/Détermination_de_la_Fréquence_Fondamentale.tex" 1702379517 923 e06e66d4402efcb60fb7fdfd19f7cb0e ""
+  "lectures/Méthode/Détection_des_Notes.tex" 1702386386 666 916595f57d097b450eac12de2993e2bf ""
+  "lectures/Méthode/Détermination_de_la_Fréquence_Fondamentale.tex" 1702386624 921 102673041c5953477c5326350f640825 ""
   "lectures/Méthode/Méthode.tex" 1702386256 608 137ea7ae81295b060e8d2ebfd0511a5c ""
   "lectures/Resultats_Experimentaux.tex" 1700055042 18 ebdf58819cf27c5317fe416e56c7a783 ""
-  "main.aux" 1702386275 1685 3876572be3ec995c2c2a88070d083950 "pdflatex"
+  "main.aux" 1702386637 1685 3876572be3ec995c2c2a88070d083950 "pdflatex"
   "main.tex" 1702386146 1327 5447f6736dd2b8863f04439860635e6f ""
-  "main.toc" 1702386275 578 f0043f3f2fe48a45b6f54c68f4d2437f "pdflatex"
+  "main.toc" 1702386637 578 f0043f3f2fe48a45b6f54c68f4d2437f "pdflatex"
   "pics//signal_after_mean.png" 1702383855 27026 3ac9bc90f3176a5dcd9b762a1a1e0adb ""
   "pics//signal_before_mean.png" 1702379033 36167 0a02b2659a6b6731da794bd2c4e68381 ""
   "pics//signal_with_note_detected.png" 1702385700 26027 94981e4b6042e058b98edc864495f022 ""
