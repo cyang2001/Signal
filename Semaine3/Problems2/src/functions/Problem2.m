@@ -11,7 +11,7 @@ function Problem2()
     % Calculate the average of the audio signal, to change it to mono channal
     audioSignal = {mean(s1, 2), mean(s2, 2), mean(s3, 2), mean(s4, 2), mean(s5, 2), mean(s6, 2), mean(s7, 2)};
     Fs = {Fs1, Fs2, Fs3, Fs4, Fs5, Fs6, Fs7};
-    audioName = {'Pi_A_96K.wav', 'Pi_C_96K.wav', 'Vi_A3_96K.wav', 'Vi_C3_96K.wav', 'Vi_G4_96K.wav', 'Fl_A4_96K.wav', 'Fl_B3_96K.wav'};
+    audioName = {'Pi_A_96K', 'Pi_C_96K', 'Vi_A3_96K', 'Vi_C3_96K', 'Vi_G4_96K', 'Fl_A4_96K', 'Fl_B3_96K'};
     notesPiano = ["A", "Bb", "B", "C", "C#", "D", "Eb", "E", "F", "F#", "G", "G#"];
     notesViolin = ["G", "G#", "A", "Bb", "B", "C", "C#", "D", "Eb", "E", "F", "F#"];
     notesFlute = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "G#", "A", "Bb", "B"];
@@ -29,10 +29,17 @@ function Problem2()
         xlabel('Time (s)');
         ylabel('W');
         title('Audio Signal in Time Domain');
-        
+        hold on;
         % Detect note begin and end times
         [startTemp, endTemp] = DetectNoteTimes(p_W, Fs{i}, max(p_W));
-
+        for k = 1:length(startTemp)
+          halfWindowSize = floor(windowSize / 2);
+          startIndex = max(1, (startTemp(k)*Fs{i} - halfWindowSize))
+          endIndex = min(length(p_W), (endTemp(k)*Fs{i} + halfWindowSize))
+          plot(t(startIndex:endIndex), p_W(startIndex:endIndex), 'r');
+        end
+        
+        hold off;
         disp(['The begining of this signal is :', num2str(startTemp), ' ending is :', num2str(endTemp)]);
 
         % Calculate average power  P
