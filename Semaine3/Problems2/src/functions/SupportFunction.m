@@ -3,23 +3,7 @@ function SupportFunction()
     [s1, Fs1] = audioread('Pi_A_96K.wav');
     t = 0:1/Fs1:(length(s1)-1)/Fs1;
     s1 = mean(s1, 2);
-    windowSize = 20000;
-    p_W = CalculateWindowedPowerSliding(s1, windowSize);
-    numWindows = length(s1) - windowSize + 1;
-    t = (0:numWindows - 1) * (1 / Fs1);
-    figure;
-    plot(t, p_W);
-    xlabel('Time (s)');
-    ylabel('W');
-    title('Audio Signal in Time Domain');
-    hold on;
-    % Detect note begin and end times
-    [startTemp, endTemp] = DetectNoteTimes(p_W, Fs1, max(p_W));
-    halfWindowSize = floor(windowSize / 2);
-    startIndex = max(1, (startTemp*Fs1 - halfWindowSize))
-    endIndex = min(length(p_W), (endTemp*Fs1 + halfWindowSize))
-    plot(t(startIndex:endIndex), p_W(startIndex:endIndex), 'r');
-    hold off;
+    
 end 
 function p_W = CalculateWindowedPowerSliding(signal, windowSize)
   % Calculate the power of the given signal in dBm using a sliding window
