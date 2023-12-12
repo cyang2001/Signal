@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{graphicx}
 \usepackage{subfiles}
+\usepackage{color}
 \title{Traitment numérique du signal \\ \vspace{5mm} Rapport sur le problème 2 \\ \vspace{3mm} Groupe G10C et } 
 \author{MANGIN Rémi \\
 LE MONNIER Romain \\
@@ -18,21 +19,24 @@ YANG Chen}
 \newpage
 \input{problem.tex}
 \newpage
-\section{Introduction}
+\textcolor{blue}{\section{Introduction}}
 \input{lectures/Introduction.tex}
+\textcolor{blue}{\section{Méthode}}
+\input{lectures/Méthode/Méthode.tex}
+\textcolor{blue}{\subsection{Acquisition et Pré-traitement du Signal}}
+\input{lectures/Méthode/Acquisition_et_Prétraitement_du_Signal.tex}
+\textcolor{blue}{\subsection{Détection des Notes}}
+\input{lectures/Méthode/Détection_des_Notes.tex}
+\textcolor{blue}{\subsection{Calcul de la Puissance Moyenne}}
+\input{lectures/Méthode/Calcul_de_la_Puissance_Moyenne.tex}
+\textcolor{blue}{\subsection{Détermination de la Fréquence Fondamentale}}
+\input{lectures/Méthode/Détermination_de_la_Fréquence_Fondamentale.tex}
+\textcolor{blue}{\subsection{Analyse des Harmoniques}}
+\input{lectures/Méthode/Analyse_des_Harmoniques.tex}
 \newpage
-\section{Méthod}
-\input{lectures/Méthod/Méthod.tex}
-\subsection{Detection du signal utile}
-\input{lectures/Méthod/Detection_du_signal_utile.tex}
-\subsection{Synchronisation}
-\input{lectures/Méthod/Synchronisation.tex}
-\subsection{Decodage}
-\input{lectures/Méthod/Decodage.tex}
-\newpage
-\section{Resultats Experimentaux}
+\textcolor{blue}{\section{Résultats Expérimentaux}}
 \input{lectures/Resultats_Experimentaux.tex}
 \newpage
-\section{Conclusion}
+\textcolor{blue}{\section{Conclusion}}
 \input{lectures/Conclusion.tex}
 \end{document}
