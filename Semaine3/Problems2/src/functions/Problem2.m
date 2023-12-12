@@ -11,6 +11,7 @@ function Problem2()
     % Calculate the average of the audio signal, to change it to mono channal
     audioSignal = {mean(s1, 2), mean(s2, 2), mean(s3, 2), mean(s4, 2), mean(s5, 2), mean(s6, 2), mean(s7, 2)};
     Fs = {Fs1, Fs2, Fs3, Fs4, Fs5, Fs6, Fs7};
+    audioName = {'Pi_A_96K.wav', 'Pi_C_96K.wav', 'Vi_A3_96K.wav', 'Vi_C3_96K.wav', 'Vi_G4_96K.wav', 'Fl_A4_96K.wav', 'Fl_B3_96K.wav'};
     notesPiano = ["A", "Bb", "B", "C", "C#", "D", "Eb", "E", "F", "F#", "G", "G#"];
     notesViolin = ["G", "G#", "A", "Bb", "B", "C", "C#", "D", "Eb", "E", "F", "F#"];
     notesFlute = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "G#", "A", "Bb", "B"];
@@ -28,7 +29,7 @@ function Problem2()
         xlabel('Time (s)');
         ylabel('W');
         title('Audio Signal in Time Domain');
-
+        
         % Detect note begin and end times
         [startTemp, endTemp] = DetectNoteTimes(p_W, Fs{i}, max(p_W));
 
@@ -80,9 +81,12 @@ function Problem2()
         xlabel('Frequency (Hz)');
         ylabel('Power/Frequency (dB/Hz)');
         title('Power Spectral Density of the Signal ');
+        frame = getframe(gcf);
+        im = frame2im(frame);
 
-        instrument = ClassifyInstrument(CalculateADSR(p_W, Fs{i}, max(p_W)), CalculateSpectralCentroid(p_W, Fs{i}), CalculateZeroCrossingRate(p_W));
-        disp([instrument]);
+        imwrite(im, ['../../results/' , audioName{i} , '.png']);
+        %instrument = ClassifyInstrument(CalculateADSR(p_W, Fs{i}, max(p_W)), CalculateSpectralCentroid(p_W, Fs{i}), CalculateZeroCrossingRate(p_W));
+        %disp([instrument]);
     end
 
 end
@@ -234,7 +238,6 @@ function [tablePiano, tableViolin, tableFlute] = GenerateFrequencyTables()
 
     baseFrequenciesPiano = [27.5, 29.135, 30.868, 16.35, 17.32, 18.35, 19.45, 20.60, 21.83, 23.12, 24.50, 25.96];
     baseFrequenciesViolin = [196, 207.65, 220, 233.08, 246.94, 130.81, 138.59, 146.83, 155.56, 164.81, 174.61, 185.00];
-
     baseFrequenciesFlute = [261.63, 277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392, 415.3, 440, 466.16, 493.88];
 
     numOctaves = length(octaves);
