@@ -6,3 +6,5 @@ On propose une méthode de détection et de catégorisation des notes, qui perme
   \item $f_h$: la fréquence haute telle que [0,$f_h$] contient 99\% de la puissance
   \item $n_h$: le nombre d'harmoniques dans cette bande de fréquences
 \end{itemize}
+Les signaux sont en stéréo, du coup on moyenne les signaux. \\
+Pour détecter le son utile, on détecte les plages de son de puissance supérieure à 1\%  de la puissance maximale (en W), puis ne garde que celles de durée supérieure à une seconde. \\
