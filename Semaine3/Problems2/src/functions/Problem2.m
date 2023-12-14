@@ -34,8 +34,6 @@ function Problem2()
         [startTemp, endTemp] = DetectNoteTimes(p_W, Fs{i}, max(p_W));
         for k = 1:length(startTemp)
           halfWindowSize = floor(windowSize / 2);
-          startIndex = max(1, (startTemp(k)*Fs{i} - halfWindowSize))
-          endIndex = min(length(p_W), (endTemp(k)*Fs{i} + halfWindowSize))
           plot(t(startIndex:endIndex), p_W(startIndex:endIndex), 'r');
         end
         
