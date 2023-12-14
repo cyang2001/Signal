@@ -1,9 +1,22 @@
 \documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{ulem}
 \usepackage{graphicx}
 \usepackage{subfiles}
 \usepackage{subfigure}
 \usepackage{color}
+\usepackage{soul}
 \usepackage[hidelinks]{hyperref}
+\usepackage{caption}
+\usepackage{tcolorbox}
+% ajouter tous les package ici
+\numberwithin{equation}{section}
+\tcbuselibrary{theorems}
 \graphicspath{{pics/}}
 
 \title{Traitement numérique du signal \\ \vspace{5mm} Livrable final \\ \vspace{3mm} Groupe G10C } 
@@ -25,31 +38,58 @@ YANG Chen}
 \newpage
 \textcolor{blue}{\section{Chapitre I : Problème I}}
 \textcolor{blue}{\subsection{Introduction}}
-\input{Semaine3/Problems2/rapport/lectures/Introductions/Introduction_Probleme_I}
-\textcolor{blue}{\subsection{Méthode}}\input{Semaine3/Problems2/rapport/lectures/Méthodes/Méthode_ProblemeI}
+\input{lectures/Introductions/Introduction_Probleme_I}
+\textcolor{blue}{\subsection{Méthode}}\input{lectures/Méthodes/Méthode_ProblemI/Méthode_ProblemeI}
 \textcolor{blue}{\subsection{Résultats Expérimentaux}}
-\input{Semaine3/Problems2/rapport/lectures/Resultats/Resultats_Experimentaux_I}
+\input{lectures/Resultats/Resultats_Experimentaux_I}
 \textcolor{blue}{\subsection{Conclusion}}
-\input{Semaine3/Problems2/rapport/lectures/Conclusions/Conclusion_ProblemeI}
+\input{lectures/Conclusions/Conclusion_ProblemeI}
 \textcolor{blue}{\section{Chapitre II : Problème II}}
 \textcolor{blue}{\subsection{Introduction}}
-\input{Semaine3/Problems2/rapport/lectures/Introductions/Introduction_Probleme_II}
+\input{lectures/Introductions/Introduction_Probleme_II}
 \textcolor{blue}{\subsection{Méthode}}
-\input{Semaine3/Problems2/rapport/lectures/Méthodes/Méthode_ProblemII/Méthode}
+\input{lectures/Méthodes/Méthode_ProblemII/Méthode}
 \textcolor{blue}{\subsubsection{Acquisition et Pré-traitement du Signal}}
-\input{Semaine3/Problems2/rapport/lectures/Méthodes/Méthode_ProblemII/Acquisition_et_Prétraitement_du_Signal}
+\input{lectures/Méthodes/Méthode_ProblemII/Acquisition_et_Prétraitement_du_Signal}
+\newpage
 \textcolor{blue}{\subsubsection{Détection des Notes}}
-\input{Semaine3/Problems2/rapport/lectures/Méthodes/Méthode_ProblemII/Détection_des_Notes}
+\input{lectures/Méthodes/Méthode_ProblemII/Détection_des_Notes}
 \textcolor{blue}{\subsubsection{Détermination de la Fréquence Fondamentale}}
-\input{Semaine3/Problems2/rapport/lectures/Méthodes/Méthode_ProblemII/Détermination_de_la_Fréquence_Fondamentale}
+\input{lectures/Méthodes/Méthode_ProblemII/Détermination_de_la_Fréquence_Fondamentale}
 \textcolor{blue}{\subsubsection{Analyse des Harmoniques}}
-\input{Semaine3/Problems2/rapport/lectures/Méthodes/Méthode_ProblemII/Analyse_des_Harmoniques}
+\input{lectures/Méthodes/Méthode_ProblemII/Analyse_des_Harmoniques}
 \newpage
 \textcolor{blue}{\subsection{Résultats Expérimentaux}}
-\input{Semaine3/Problems2/rapport/lectures/Resultats/Resultats_Experimentaux_ProblemII}
+\input{lectures/Resultats/Resultats_Experimentaux_ProblemII}
 \newpage
 \textcolor{blue}{\subsection{Conclusion}}
-\input{Semaine3/Problems2/rapport/lectures/Conclusions/Conclusion_ProblemII}
-\textcolor{blue}{\section{Chapitre III : Problème IV}}
+\input{lectures/Conclusions/Conclusion_ProblemII}
+\textcolor{blue}{\section{Chapitre III : Problème III}}
+\textcolor{blue}{\subsection{Introduction}}
+\input{lectures/Introductions/Introduction_ProblemeIII}
+\textcolor{blue}{\subsection{Méthode}}
+\textcolor{blue}{\subsubsection{Calcul du gain G à appliquer au signal analogique }}
+\input{lectures/Méthodes/Méthode_ProblemIII/Calcul_du_gain_G_à_appliquer_au_signal_analogique }
+\textcolor{blue}{\subsubsection{Schéma fonctionnel de numérisation }}
+\input{lectures/Méthodes/Méthode_ProblemIII/Schéma_fonctionnel_de_numérisation}
+\textcolor{blue}{\subsubsection{Calcul du nombre de bits }}
+
+\input{lectures/Méthodes/Méthode_ProblemIII/Calcul_du_nombre_de_bits}
+\
+\textcolor{blue}{\subsubsection{Calcul de la capacité de stockage pour enregistrer une heure d’audio en stéréo}}
+\input{lectures/Méthodes/Méthode_ProblemIII/Calcul_de_la_capacité_de_stockage_pour_enregistrer_une_heure_d’audio_en_stéréo}
+\textcolor{blue}{\subsubsection{Compatibilité avec une qualité et un stockage sur CD}}
+\input{lectures/Méthodes/Méthode_ProblemIII/Compatibilité_avec_une_qualité_et_un_stockage_sur_CD}
+\textcolor{blue}{\subsubsection{Respect de la fidélité du timbre des instruments d'un orchestre symphonique}}
+\input{lectures/Méthodes/Méthode_ProblemIII/Respect_de_la_fidélité_du_timbre_des_instruments_d'un_orchestre_symphonique}
+\textcolor{blue}{\subsubsection{Réflexion sur l’utilité d’un pas de quantification qui suit une loi logarithmique}}
+\input{lectures/Méthodes/Méthode_ProblemIII/Réflexion_sur_l’utilité_d’un_pas_de_quantification_qui_suit_une_loi_logarithmique}
+\textcolor{blue}{\subsection{Conclusion}}
+\input{lectures/Conclusions/Conclusion_ProblemeIII}
+\textcolor{blue}{\section{Chapitre IV : Problème IV}}
+\textcolor{blue}{\subsection{Introduction}}\input{lectures/Introductions/Introduction_Probleme_IV}
+\textcolor{blue}{\subsection{Méthode}}
+\textcolor{blue}{\subsection{Résultats Expérimentaux}}
+\textcolor{blue}{\subsection{Conclusion}}
 
 \end{document}
