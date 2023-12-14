@@ -60,15 +60,7 @@ et en terminant les calculs :
 2(1-b) = \log_2 \left( \frac{12 \times P_S}{A^2 \times 10^{\frac{SNR}{10}}} \right),
 \end{equation}
 puis
-
-\tcbox[colback=green!20, colframe=green, boxrule=4pt]{
-$
-b = 1 - \log_2 \left( \frac{12 \times P_S}{A^2 \times 10^{\frac{SNR}{10}}} \right)/2
-$
-}
-%Le problème concerne l'utilisation de \tcbox, il ne peut pas être compilé dans l'environnement equation.
-
-
+\tcbox[colback=green!20, colframe=green, boxrule=2pt]{$b = 1 - \frac{\log_2 \left( \frac{12 \times P_S}{A^2 \times 10^{\frac{SNR}{10}}} \right)}{2}$}
 Avec A = 1V, SNR = 40 dB, et $P_s = 10 ^{-7} W$, nous obtenons b $\approx 17.47.$
 \\
 Nous savons que les bits prennent des valeurs entières, ainsi, nous avons donc \tcbox[colback=green!20, colframe=green, boxrule=2pt]{18 bits}.
