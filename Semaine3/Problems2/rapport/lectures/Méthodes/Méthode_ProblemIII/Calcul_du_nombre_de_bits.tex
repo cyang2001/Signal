@@ -1,0 +1,75 @@
+Pour ce faire, nous utiliserons la formule du rapport signal bruit SNR qui est définie comme :
+\begin{equation}
+SNR = 10 \log \left( \frac{P_s}{P_b} \right).
+\end{equation}
+Avec un SNR d'au moins \( 40 \, \text{dB} \), nous déterminons d'abord la puissance du signal utile \( P_s \) puis la puissance du bruit \( P_b \), ce qui nous permet de calculer le nombre de bits.
+
+Reprenons la formule du gain pour déterminer la puissance en dBm :
+\begin{equation}
+G = P_{\text{dBm}} - S - P_{\text{SPL}} - \left( 30 + 20 \log \left( 20 \times 10^{-6} \right) \right).
+\end{equation}
+Ce qui nous donne alors :
+\begin{equation}
+P_{\text{dBm}} = G + S + P_{\text{SPL}} + 30 + 20 \log(P_{\text{ref}}).
+\end{equation}
+
+Avec \( P_{\text{SPL}} = 60 \, \text{dB SPL} \) et les mêmes valeurs que pour la partie a, nous avons :
+\begin{equation}
+P_{\text{dBm}} = 11 - 47 + 60 + 30 + 20 \log(20 \times 10^{-6}) \quad \text{donc} \quad P_{\text{dBm}} = -40 \, \text{dBm}.
+\end{equation}
+
+Pour convertir la puissance dBm en Watt, appliquons la formule :
+\begin{equation}
+P_W = 10^{\left( \frac{P_{\text{dBm}}}{10} - 3 \right)} \quad \text{ce qui nous donne} \quad P_W = 10^{-7} \, \text{Watt}.
+\end{equation}
+
+De plus, nous avons :
+\begin{equation}
+SNR = 10 \log \left( \frac{P_S}{P_b} \right),
+\end{equation}
+donc
+\begin{equation}
+P_b = \frac{P_S}{10^{\frac{SNR}{10}}}.
+\end{equation}
+La puissance moyenne du bruit de quantification \( P_b \) est donc :
+\begin{equation}
+P_b = \frac{q^2}{12},
+\end{equation}
+soit
+\begin{equation}
+q^2 = \frac{12 \times P_S}{10^{\frac{SNR}{10}}}.
+\end{equation}
+De plus, \( q \) est donné par :
+\begin{equation}
+q = \frac{2A}{2^b},
+\end{equation}
+donc
+\begin{equation}
+\left( \frac{2A}{2^b} \right)^2 = \frac{12 \times P_S}{10^{\frac{SNR}{10}}},
+\end{equation}
+et
+\begin{equation}
+A^2 \times 2^{2(1-b)} = \frac{12 \times P_S}{10^{\frac{SNR}{10}}}.
+\end{equation}
+Ainsi, nous avons :
+\begin{equation}
+2^{2(1-b)} = \frac{12 \times P_S}{A^2 \times 10^{\frac{SNR}{10}}},
+\end{equation}
+et en terminant les calculs :
+\begin{equation}
+2(1-b) = \log_2 \left( \frac{12 \times P_S}{A^2 \times 10^{\frac{SNR}{10}}} \right),
+\end{equation}
+puis
+
+\tcbox[colback=green!20, colframe=green, boxrule=4pt]{
+$
+b = 1 - \log_2 \left( \frac{12 \times P_S}{A^2 \times 10^{\frac{SNR}{10}}} \right)/2
+$
+}
+%Le problème concerne l'utilisation de \tcbox, il ne peut pas être compilé dans l'environnement equation.
+
+
+Avec A = 1V, SNR = 40 dB, et $P_s = 10 ^{-7} W$, nous obtenons b $\approx 17.47.$
+\\
+Nous savons que les bits prennent des valeurs entières, ainsi, nous avons donc \tcbox[colback=green!20, colframe=green, boxrule=2pt]{18 bits}.
+

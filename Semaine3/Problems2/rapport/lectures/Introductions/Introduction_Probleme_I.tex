@@ -1,0 +1,31 @@
+Nous présentons une approche de détection de signaux audio , dont les caractéristiques sont les suivantes :
+\begin{itemize}
+    \item Un micro avec une sensibilité (S) de - 48 dBV et un Gain (G) de 40 dB.
+    \item Les sons pénibles sont définis comme des sons de plus d'une seconde, dépassant une puissance en dBm de référence.
+    \item Les sons acceptables sont définis en dessous de ce seuil.
+    \item Chaque signal sera caractéristique par sa durée, sa puissance moyenne, tension RMS, et classifié en conséquence. 
+\end{itemize}
+
+Les expérimentations seront réalisées sur les signaux de la question F, signaux qui nous ont été fournis (bruit de marteau piqueurs, bruit de ville et de jardin). Dans un premier temps, nous implémenterons le code de détection sur le micro-contrôleur, en choisissant une fréquence d'échantillonnage adaptée aux caractéristiques matérielles. La caractérisation des bruits détectés fera l'objet d'une étape ultérieure.
+\newline 
+\\
+ \textbf{Problème I - Énoncé } \ \\
+Proposer un algorithme qui permet de détecter la présence/absence d’un signal audio enregistrant le bruit ambiant.
+Le micro utilisé a une sensibilité S (dBV) et amplifie le signal électrique avec un gain G. On définit un son "son pénible", comme un signal sonore de durée supérieure à Dt (s) et de niveau supérieur ou égal à $P_{SPL}$ (dB SPL1). A contrario, un "son acceptable", correspond à un signal sonore de niveau inférieur à $P_{SPL}$.
+\\
+Caractériser chaque son détecté par :
+\begin{itemize}
+    \item Sa durée 
+    \item sa puissance
+    \item sa tension RMS en V et le classifier en "son pénible" ou "son acceptable"
+\end{itemize}
+Paramètres S = -48 dBV, G = 40 dB, $P_{SPL}$ = 80 dB SPL, $D_t$ = 1s.
+\\
+Les expérimentations seront menées sur les signaux de la question F.
+
+
+
+
+
+
+

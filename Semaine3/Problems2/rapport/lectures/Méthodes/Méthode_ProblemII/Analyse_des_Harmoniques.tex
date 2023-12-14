@@ -1,0 +1,18 @@
+Dans l'analyse des signaux audio, la détection précise des harmoniques est essentielle pour comprendre les caractéristiques spectrales du signal.
+
+Notre recherche utilise une méthode basée sur la transformée de Fourier rapide (FFT) pour identifier les composantes harmoniques d'un signal. Ce processus consiste à calculer la FFT du signal et à en extraire les points de fréquence qui répondent à des conditions spécifiques et qui représentent les composantes harmoniques.
+
+Tout d'abord, nous effectuons une FFT sur le signal original pour obtenir son spectre, et nous ne considérons que la partie positive de la fréquence. Dans le spectre, nous identifions d'abord le point de fréquence ayant le puissance la plus élevée (\(P_{max}\)), et à partir de là, une seuil relatif est fixé (typiquement 40dB en dessous du point de puissance maximale). Tous les points de fréquence supérieurs à ce seuil sont initialement reconnus comme des harmoniques possibles.
+
+Ensuite, pour chaque multiple entier de la fréquence fondamentale (\(n \times f_0 \), où n est un nombre naturel), nous recherchons les points du spectre qui sont les plus proches de ces fréquences. Si les fréquences de ces points ne dépassent pas un seuil de fréquence maximale fixé (\(f_{max}\)) avec une puissance d'au moins 10\% de la puissance maximale, ces points de fréquence sont identifiés comme des harmoniques. De cette manière, nous pouvons extraire efficacement les composante harmoniques du signal.
+\begin{equation}
+    Harmonics = \{f_n | f_n = n \times f_0, n \in \mathbb{N}, f_n \leq f_{max}, P(f_n) \geq 0.1 \times P_{max} \}
+\end{equation}
+où:
+\begin{itemize}
+    \item \(f_n\) est la fréquence de la nième harmonique
+    \item \(f_0\) est la fréquence fondamentale
+    \item \(P(f_n)\) est la densité spectrale de puissance à la fréquence \(f_n\)
+    \item \(P_{max}\) est la maxime dans le spectrale de fréquence 
+    \item \(f_{max}\) est le seuil de fréquence le plus élevé pour la détection des harmoniques
+\end{itemize}
