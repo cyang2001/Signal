@@ -43,9 +43,9 @@ function Problem2()
         disp(['The begining of this signal is :', num2str(startTemp), ' ending is :', num2str(endTemp)]);
 
         % Calculate average power  P
-        avgPower = CalculateAveragePower(audioSignal{i}, Fs{i}, startTemp, endTemp);
+        avgPower_dBm = CalculateAveragePower(audioSignal{i}, Fs{i}, startTemp, endTemp);
 
-        disp(['The average power of this note is :', num2str(avgPower), 'W']);
+        disp(['The average power of this note is :', num2str(avgPower_dBm), 'dBm']);
 
         % Calculate fundamental frequency
         f0 = AutocorrelationFundamentalFrequency(audioSignal{i}, Fs{i});
@@ -86,7 +86,7 @@ function Problem2()
         f = (0:N - 1) * (Fs{i} / N);
         plot(f(1:floor(N / 2 + 1)), P2(1:floor(N / 2 + 1)));
         xlabel('Frequency (Hz)');
-        ylabel('Power/Frequency (dB/Hz)');
+        ylabel('Power/Frequency (W/Hz)');
         title('Power Spectral Density of the Signal ');
         frame = getframe(gcf);
         im = frame2im(frame);
@@ -160,12 +160,13 @@ function [startTemp, endTemp] = DetectNoteTimes(audioSignal, fs, max)
 
 end
 
-function avgPower = CalculateAveragePower(audioSignal, fs, startTime, endTime)
-    startIndex = floor(startTime * fs);
-    endIndex = ceil(endTime * fs);
-    avgPower = mean(audioSignal(startIndex:endIndex) .^ 2) / 0.001;
-
+function avgPower_dBm = CalculateAveragePower(audioSignal, fs, startTime, endTime)
+  startIndex = floor(startTime * fs);
+  endIndex = ceil(endTime * fs);
+  avgPower_W = mean(audioSignal(startIndex:endIndex) .^ 2); 
+  avgPower_dBm = 10 * log10(avgPower_W / 0.001); 
 end
+
 
 function f0 = CalculateFundamentalFrequency(signal, fs)
     % Calculate the fundamental frequency of the given signal
