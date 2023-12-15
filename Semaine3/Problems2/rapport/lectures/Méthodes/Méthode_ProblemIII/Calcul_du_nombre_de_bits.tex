@@ -13,14 +13,19 @@ Ce qui nous donne alors :
 P_{\text{dBm}} = G + S + P_{\text{SPL}} + 30 + 20 \log(P_{\text{ref}}).
 \end{equation}
 
-Avec \( P_{\text{SPL}} = 60 \, \text{dB SPL} \) et les mêmes valeurs que pour la partie a, nous avons :
+Avec \( P_{\text{SPL}} = 60 \, \text{dB SPL} \) et les mêmes valeurs que pour la partie 3.2.1, nous avons :
 \begin{equation}
 P_{\text{dBm}} = 11 - 47 + 60 + 30 + 20 \log(20 \times 10^{-6}) \quad \text{donc} \quad P_{\text{dBm}} = -40 \, \text{dBm}.
 \end{equation}
+\\
 
 Pour convertir la puissance dBm en Watt, appliquons la formule :
 \begin{equation}
-P_W = 10^{\left( \frac{P_{\text{dBm}}}{10} - 3 \right)} \quad \text{ce qui nous donne} \quad P_W = 10^{-7} \, \text{Watt}.
+P_W = 10\log{\left( \frac{P_{\text{dBm}}}{10^{-3}}  \right)} \quad \text{qui peut également être exprimée comme $P_{dBm} = 10\log(1000P_w)$ }.
+\end{equation}
+En isolant $P_w$, nous obtenons :
+\begin{equation}
+P_W = 10^{\left( \frac{P_{\text{dBm}}}{10^{-3}}  \right)} \quad \text{ce qui nous donne} \quad P_W = 10^{-7} \, \text{Watt}.
 \end{equation}
 
 De plus, nous avons :
@@ -35,7 +40,7 @@ La puissance moyenne du bruit de quantification \( P_b \) est donc :
 \begin{equation}
 P_b = \frac{q^2}{12},
 \end{equation}
-soit
+soit,
 \begin{equation}
 q^2 = \frac{12 \times P_S}{10^{\frac{SNR}{10}}}.
 \end{equation}
@@ -63,5 +68,5 @@ puis
 \tcbox[colback=green!20, colframe=green, boxrule=2pt]{$b = 1 - \frac{\log_2 \left( \frac{12 \times P_S}{A^2 \times 10^{\frac{SNR}{10}}} \right)}{2}$}
 Avec A = 1V, SNR = 40 dB, et $P_s = 10 ^{-7} W$, nous obtenons b $\approx 17.47.$
 \\
-Nous savons que les bits prennent des valeurs entières, ainsi, nous avons donc \tcbox[colback=green!20, colframe=green, boxrule=2pt]{18 bits}.
+Nous savons que les bits prennent des valeurs entières, ainsi, nous avons donc \tcbox[colback=green!20, colframe=green, boxrule=2pt]{18 bits.}
 

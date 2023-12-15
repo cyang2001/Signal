@@ -1,2 +1,21 @@
 
-La synchronisation du récepteur est cruciale pour détecter les instants de début et de fin de chaque note. La détection se fait en trouvant les points où la puissance du signal dépasse un seuil défini (1\% de la puissance maximale). Les indices correspondants sont ensuite convertis en temps, fournissant ainsi les instants de début et de fin de chaque note. Les notes d'une durée inférieure à une seconde sont éliminées pour garantir la qualité des données. 
+En cette partie, nous allons calculer la puissance moyenne de la partie des notes précédemment isolées.
+
+\begin{equation}
+    \overline{P} = \frac{1}{t_{\text{end}} f_s - t_{\text{start}} f_s} \sum_{n=t_{\text{start}} f_s}^{t_{\text{end}} f_s} P(n)^2
+\end{equation}
+
+
+Où :
+\begin{itemize}
+  \item \( f_s \) est la fréquence d'échantillonnage
+  \item \( t_{\text{start}} \) est l'heure de début
+  \item \( t_{\text{end}} \) est l'heure de fin
+  \item \( n \) est l'indice de l'échantillon
+\end{itemize}
+
+La puissance moyenne en dBm peut alors être calculée en utilisant :
+\begin{equation}
+    \text{avgPower}_{\text{dBm}} = 10 \cdot \log_{10}\left(\frac{\overline{P}}{0.001}\right)
+\end{equation}
+
