@@ -29,12 +29,12 @@
     % Collect all signals and their sample rates
     signals = {s1, s2, s3, s4};
     Fs = {Fs1, Fs2, Fs3, Fs4};
-    
     % Define window sizes for the analysis
     windowSizes = {39900, 31000, 40000, 37100};
     
     % Process each signal
     for i = 1:length(signals)
+        sound(signals{i}, Fs{i});
         % Calculate the minimum number of samples for the given D_t
         minSamples = D_t * Fs{i};
         power_mean_dBm = FunctionCalculerPowerMeandBM(FunctionAmplifier(signals{i}, G));
