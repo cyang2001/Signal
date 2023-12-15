@@ -29,7 +29,25 @@ Après avoir appliqué la fonction du problème aux signaux Jardin01.mp3, Jardin
 Pour chacun des signaux, l'amplitude en fonction du temps est présentée en haut, tandis que la puissance en dBm en fonction du temps est affichée en bas. Les pointillés rouges désignent la puissance de référence à 8 dBm et on observe bien que lorsque le signal dépasse 8 dBm et dure plus d'une seconde, on a une plage de son pénible (en rouge).
 \\
 \\
-\begin{tabular}{|c|c|c|c|}
-\hline
-&
+\title{Avant amplification}
+\\
+\\
+\begin{tabular}{|c|c|c|c|c|}
+  \hline
+  & Ville01 & MarteauPiqueur01 & Jardin01 & Jardin02 \\
+  \hline
+  Puissance moyenne (dBm) & & & & \\
+  \hline
+  Puissance moyenne (mW) & & & & \\
+  \hline
+  Durée & & & & \\
+  \hline
+  Tension RMS (V) & & & & \\
+  \hline
 \end{tabular}
+\\
+\\
+Dans ce tableau des caractéristiques des différents signaus, nous avons déterminer la puissance moyenne. Elle mesure la puissance d'un signal sur une période de temps donnée et elle est définie comme la quantité totale d'énergie transférée ou consommée divisée par la durée de cette période. Entre deux instants, elle est l'énergie dissipée par la durée d'observation est sa formule est : 
+\begin{equation}
+    P(x, t_{1}, t_{2}) = \frac{1}{t_{2} - t{1}} \int_{t_{1}}^{t_{2}}x_{c}(t)^2 dt
+\end{equation}
