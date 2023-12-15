@@ -1,9 +1,11 @@
-Après avoir appliqué la fonction du problème aux signaux Jardin01.mp3, Jardin02.mp3, Ville01.mp3 et MarteauPiqueur01.mp3, voici ce que nous obtenons:
+Après avoir appliqué la fonction du problème aux signaux Jardin01.mp3, Jardin02.mp3, Ville01.mp3 et MarteauPiqueur01.mp3, voici ce que nous obtenons :
 \\
 \\
 \textbf{Légende :}
 \\
-\textcolor{red}{Rouge :} dépasse la durée et la puissance seuil, \textcolor{blue}{Bleu :}dépasse la puissance seuil mais plus petit que dt
+\textcolor{red}{Rouge :} dépasse la durée et la puissance seuil
+\\
+\textcolor{blue}{Bleu : }dépasse la puissance seuil, mais plus petit que dt
 
 \begin{figure}[htb]
 \subfigure[Application sur le signal Jardin01]{
@@ -29,25 +31,46 @@ Après avoir appliqué la fonction du problème aux signaux Jardin01.mp3, Jardin
 Pour chacun des signaux, l'amplitude en fonction du temps est présentée en haut, tandis que la puissance en dBm en fonction du temps est affichée en bas. Les pointillés rouges désignent la puissance de référence à 8 dBm et on observe bien que lorsque le signal dépasse 8 dBm et dure plus d'une seconde, on a une plage de son pénible (en rouge).
 \\
 \\
-\title{Avant amplification}
+\begin{table}
+  \centering
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    & Ville01 & MarteauPiqueur01 & Jardin01 & Jardin02 \\
+    \hline
+    Puissance moyenne (dBm) &-27.363 & -22.7752 
+  &-23.5662 & -21.5499\\
+    \hline
+    Puissance moyenne (mW) & 1.835 & 5.2781\times 10^-6 & 4.3992\times10^-6 & 6.9986\times10^-6\\
+    \hline
+    Durée & 43.5566 & 24.8176 & 21.058 & 29.0993\\
+    \hline
+    Tension RMS (V) & 0.0013547 & 0.0022974 & 0.0020974 & 0.0026455 \\
+    \hline
+  \end{tabular}
+    \caption{Avant Amplification}
+\end{table}
 \\
+\begin{table}
+  \centering
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    & Ville01 & MarteauPiqueur01 & Jardin01 & Jardin02 \\
+    \hline
+    Puissance moyenne (dBm) & 12.637 & 17.2248 & 16.4338 & 18.4501\\
+    \hline
+    Puissance moyenne (mW) & 0.018353 & 0.052781 & 0.043992& 0.069986\\
+    \hline
+    Durée (s)& 43.5566 & 24.8176 & 21.058 & 29.0993 \\
+    \hline
+    Tension RMS (V) & 0.13547 & 0.22974 & 0.20974 & 0.26455 \\
+    \hline
+  \end{tabular}
+    \caption{Après Amplification}
+\end{table}
 \\
-\begin{tabular}{|c|c|c|c|c|}
-  \hline
-  & Ville01 & MarteauPiqueur01 & Jardin01 & Jardin02 \\
-  \hline
-  Puissance moyenne (dBm) & & & & \\
-  \hline
-  Puissance moyenne (mW) & & & & \\
-  \hline
-  Durée & & & & \\
-  \hline
-  Tension RMS (V) & & & & \\
-  \hline
-\end{tabular}
-\\
-\\
-Dans ce tableau des caractéristiques des différents signaus, nous avons déterminer la puissance moyenne. Elle mesure la puissance d'un signal sur une période de temps donnée et elle est définie comme la quantité totale d'énergie transférée ou consommée divisée par la durée de cette période. Entre deux instants, elle est l'énergie dissipée par la durée d'observation est sa formule est : 
+\newpage
+% analyse des sons par rapport au ressenti à l'oreille sons pénible par rapport aux programme 
+Dans ce tableau des caractéristiques des différents signaux, nous avons déterminé la puissance moyenne. Elle mesure la puissance d'un signal sur une période de temps donnée et elle est définie comme la quantité totale d'énergie transférée ou consommée divisée par la durée de cette période. Entre deux instants, elle est l'énergie dissipée par la durée d'observation et sa formule est : 
 \begin{equation}
     P(x, t_{1}, t_{2}) = \frac{1}{t_{2} - t{1}} \int_{t_{1}}^{t_{2}}x_{c}(t)^2 dt
 \end{equation}
