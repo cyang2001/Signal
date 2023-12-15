@@ -34,6 +34,8 @@ function Problem2()
         [startTemp, endTemp] = DetectNoteTimes(p_W, Fs{i}, max(p_W));
         for k = 1:length(startTemp)
           halfWindowSize = floor(windowSize / 2);
+          startIndex = max(1, (startTemp(k)*Fs{i} - halfWindowSize));
+          endIndex = min(length(p_W), (endTemp(k)*Fs{i} + halfWindowSize));
           plot(t(startIndex:endIndex), p_W(startIndex:endIndex), 'r');
         end
         
@@ -53,22 +55,19 @@ function Problem2()
         if i == 1 || i == 2
             tolerance = 2;
             [octave, note] = ind2sub(size(tablePiano), find(abs(tablePiano - f0) <= tolerance));
-            disp(['The note of this frequency is :', notesPiano(note)]);
-            disp(['The octave of this frequency is :', octaves(octave)]);
+            disp(['The note of this frequency is :', char(notesPiano(note)), octaves(octave)]);
         end
 
         if i == 3 || i == 4 || i == 5
             tolerance = 4;
             [octave, note] = ind2sub(size(tableViolin), find(abs(tableViolin - f0) <= tolerance));
-            disp(['The note of this frequency is :', notesViolin(note)]);
-            disp(['The octave of this frequency is :', octaves(octave)]);
+            disp(['The note of this frequency is :', char(notesViolin(note)), octaves(octave)]);
         end
 
         if i == 6 || i == 7
             tolerance = 2;
             [octave, note] = ind2sub(size(tableFlute), find(abs(tableFlute - f0) <= tolerance));
-            disp(['The note of this frequency is :', notesFlute(note)]);
-            disp(['The octave of this frequency is :', octaves(octave)]);
+            disp(['The note of this frequency is :', char(notesFlute(note)), octaves(octave)]);
 
         end
 
