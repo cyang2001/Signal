@@ -9,11 +9,11 @@ La première méthode s'appuie sur la détection de la fréquence qui présente 
     f_0 = \arg\max_f(\frac{2}{N}|FFT(signal)|)
 \end{equation}
 
-Quant à la seconde méthode, nous utilisons le principe de l'auto-corrélation dans le domaine temporel. Cette technique permet de détecter les répétitions périodiques au sein du signal, ce qui facilite l'identification de la fréquence fondamentale, même en présence de harmoniques complexes ou de bruit.
+Quant à la seconde méthode, nous utilisons le principe de l'auto-corrélation dans le domaine temporel. Cette technique permet de détecter les répétitions périodiques au sein du signal, ce qui facilite l'identification de la fréquence fondamentale, même en présence d'harmoniques complexes ou de bruit.
 \begin{equation}
     f_0 = \frac{f_s}{Lag_{peak}}
 \end{equation}
-Où: 
+Où : 
 \begin{itemize}
     \item $f_0$ est la fréquence fondamentale  
     \item $f_s$ est la fréquence d'échantillonnage 
