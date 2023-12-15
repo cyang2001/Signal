@@ -2,11 +2,11 @@ Nous avons $D = F_e * b$
 \\
 Où D est le débit binaire, $F_e$ la fréquence d'échantillonnage, b le nombre de bits.
 \\
-En considérant nos paramètres, avec une bande passante 200 Hz à 20 kHz, la fréquence d'échantillonnage $F_e$ doit être d'au moins 40 000 Hz, conformément au théorème d'échantillonnage de Shannon, où nous devons respecter $F_e\ge 2F_{max}$ avec $F_{max}$ étant égal à 20 kHz. Ainsi $F_e$ doit être d'au moins 40 kHz. Pour le nombre de bits b, nous avons 18 bits, enfin, il faut multiplier le débit par 2, car nous sommes en stéréo. 
+En considérant nos paramètres, avec une bande passante 200 Hz à 20 kHz, la fréquence d'échantillonnage $F_e$ doit être d'au moins 40 000 Hz, conformément au théorème d'échantillonnage de Shannon, où nous devons respecter $F_e\ge 2F_{max}$ avec $F_{max}$ étant égal à 20 kHz. Ainsi $F_e$ doit être d'au moins 40 kHz. Pour le nombre de bits b, nous avons 18 bits, ensuite, il faut multiplier le débit par 2, car nous sommes en stéréo, enfin, il faut effectuer une division par 8 pour obtenir le résultat en octet.
 \\
 Ainsi, après calculs, nous avons
 \tcbox[colback=green!20, colframe=green, boxrule=2pt]{$C_s = \frac{3600*40 000*18*2}{8} = 648 M_o$}
 
 Cependant, nous ne sommes pas certains d'être en stéréo, alors nous effectuons le même calcul en considérant le cas où nous sommes en mono.
 \\
-Après les calculs, nous obtenons \sethlcolor{green}\hl{$C_m = \frac{3600*40 000*18}{8} = 324 M_o$}
+Après les calculs, nous obtenons \tcbox[colback=green!20, colframe=green, boxrule=2pt]{$C_m = \frac{3600*40 000*18}{8} = 324 M_o$}

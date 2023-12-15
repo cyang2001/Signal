@@ -6,6 +6,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{ulem}
+\usepackage{float}
 \usepackage{graphicx}
 \usepackage{subfiles}
 \usepackage{subfigure}
@@ -14,12 +15,29 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage{caption}
 \usepackage{tcolorbox}
+\usepackage[margin=1in]{geometry} 
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{tablefootnote}
 % ajouter tous les package ici
 \numberwithin{equation}{section}
 \tcbuselibrary{theorems}
 \graphicspath{{pics/}}
 
-\title{Traitement numérique du signal \\ \vspace{5mm} Livrable final \\ \vspace{3mm} Groupe G10C } 
+\title{\begin{figure}[H]
+\subfigure{
+\label{Logo_isep}
+\includegraphics[width = 0.6\textwidth]{Semaine3/Problems2/rapport/pics/logo_isep.png}
+}
+\subfigure{
+\label{Logo_data_waves}
+\includegraphics[width = 0.3\textwidth]{Semaine3/Problems2/rapport/pics/logo_data_waves.png}
+
+}
+\end{figure}
+Traitement numérique du signal \\ \vspace{5mm} Livrable final \\ \vspace{3mm} Groupe G10C } 
+
 \author{MANGIN Rémi \\
 LE MONNIER Romain \\
 TEOFILOVIC Kristina \\
@@ -39,14 +57,19 @@ YANG Chen}
 \textcolor{blue}{\section{Chapitre I : Problème I}}
 \textcolor{blue}{\subsection{Introduction}}
 \input{lectures/Introductions/Introduction_Probleme_I}
+\newpage
 \textcolor{blue}{\subsection{Méthode}}\input{lectures/Méthodes/Méthode_ProblemI/Méthode_ProblemeI}
+\newpage
 \textcolor{blue}{\subsection{Résultats Expérimentaux}}
 \input{lectures/Resultats/Resultats_Experimentaux_I}
+\newpage
 \textcolor{blue}{\subsection{Conclusion}}
 \input{lectures/Conclusions/Conclusion_ProblemeI}
+\newpage
 \textcolor{blue}{\section{Chapitre II : Problème II}}
 \textcolor{blue}{\subsection{Introduction}}
 \input{lectures/Introductions/Introduction_Probleme_II}
+\newpage
 \textcolor{blue}{\subsection{Méthode}}
 \input{lectures/Méthodes/Méthode_ProblemII/Méthode}
 \textcolor{blue}{\subsubsection{Acquisition et Pré-traitement du Signal}}
@@ -54,16 +77,19 @@ YANG Chen}
 \newpage
 \textcolor{blue}{\subsubsection{Détection des Notes}}
 \input{lectures/Méthodes/Méthode_ProblemII/Détection_des_Notes}
+\textcolor{blue}{\subsubsection{Calcul de la puissance moyenne}}
+\input{lectures/Méthodes/Méthode_ProblemII/Calcul_de_la_Puissance_Moyenne}
 \textcolor{blue}{\subsubsection{Détermination de la Fréquence Fondamentale}}
 \input{lectures/Méthodes/Méthode_ProblemII/Détermination_de_la_Fréquence_Fondamentale}
 \textcolor{blue}{\subsubsection{Analyse des Harmoniques}}
 \input{lectures/Méthodes/Méthode_ProblemII/Analyse_des_Harmoniques}
-\newpage
+\textcolor{blue}{\subsubsection{Extraction et classification des caractéristiques des sons d'instruments de musique}}
+\input{lectures/Méthodes/Méthode_ProblemII/Extraction_et_classification_des_caractéristiques_des_sons_d'instruments_de_musique}
 \textcolor{blue}{\subsection{Résultats Expérimentaux}}
 \input{lectures/Resultats/Resultats_Experimentaux_ProblemII}
-\newpage
 \textcolor{blue}{\subsection{Conclusion}}
 \input{lectures/Conclusions/Conclusion_ProblemII}
+\newpage
 \textcolor{blue}{\section{Chapitre III : Problème III}}
 \textcolor{blue}{\subsection{Introduction}}
 \input{lectures/Introductions/Introduction_ProblemeIII}
@@ -86,6 +112,7 @@ YANG Chen}
 \input{lectures/Méthodes/Méthode_ProblemIII/Réflexion_sur_l’utilité_d’un_pas_de_quantification_qui_suit_une_loi_logarithmique}
 \textcolor{blue}{\subsection{Conclusion}}
 \input{lectures/Conclusions/Conclusion_ProblemeIII}
+\newpage
 \textcolor{blue}{\section{Chapitre IV : Problème IV}}
 \textcolor{blue}{\subsection{Introduction}}\input{lectures/Introductions/Introduction_Probleme_IV}
 \textcolor{blue}{\subsection{Méthode}}

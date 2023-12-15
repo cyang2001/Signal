@@ -1,12 +1,11 @@
 Nous proposons une approche visant à élaborer un algorithme de détection et de caractérisation des notes de musique jouées par divers instruments tels que le violon, la flûte et le piano, tout en déterminant précisément leur hauteur. Notre algorithme est conçu pour générer des sorties exhaustives, incluant les instants de début et de fin de chaque note ($t_d$,$t_f$), la puissance moyenne du signal en dBm ($P_{dBm}$), la fréquence fondamentale ($f_0$) accompagnée du nom et de l’octave de la note jouée, la fréquence haute $f_h$ définie par [0, $f_h$] englobant 99.99\% de la puissance, le nombre d’harmoniques dans cette bande de fréquences ($n_h$), ainsi que toutes autres caractéristiques jugées pertinentes pour classifier les notes selon l'instrument de musique. Nous adopterons la méthode de détection d’un son utile du PBI (Produit de l'analyse du Bruit Instantané) pour élaborer notre algorithme, en nous appuyant sur une approche en trois étapes. Cette méthodologie implique la détection du signal sonore, la synchronisation du récepteur par la détection de l'en-tête, et enfin, le décodage des informations pertinentes pour caractériser chaque note. 
-\newline
-\\
+
 \textbf{Problème II - Énoncé } \  \\
 Proposer un algorithme qui permet de détecter, de caractériser une note de musique jouée par un instrument (violon, flûte, piano) et de déterminer sa hauteur. \\
 Cet algorithme devra produire les sorties suivantes : \\
 \begin{itemize}
     \item $t_d, t_f$: instants de début et de fin de note
-    \item $P_dBm$: la puissance moyenne du signal en dBm
+    \item $P_{dBm}$: la puissance moyenne du signal en dBm
     \item $f_0$: la fréquence fondamentale et le nom et l'octave de la note jouée
     \item $f_h$: la fréquence haute telle que [0,$f_h$] contient 99.99\% de la puissance
     \item $n_h$: le nombre d'harmoniques dans cette bande de fréquences

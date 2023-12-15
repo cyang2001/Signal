@@ -1,26 +1,8 @@
-Reprenons la formule du problème I :$P_{dBm} = 20log(S_{REF}*10^\frac{S}{20}*P_{REF}*10^\frac{P_{SPL}}{20}*10^\frac{G}{20})$ pour la simplifier. $P_{dBm} = 20\log(S_{REF}) + S + 20\log(P_{REF}) + P_{SPL} + G + 30$, d'où, avec $S_{REF} = 1\frac{V}{P_a}$, $P_{REF} = 20\mu P_a$, S = -47 DBV, $P_{dbm} = 10log(V_a^2 * 1000) = 30$ (comme la dynamique après amplification est [-1V,+1V], donc $V_a = 1V$) ; nous obtenons :
-\\
-$G = P_{dBm} - 20\log(1) - 20\log(20*10^{-6}) - S - P_{SPL} - 30 $, soit
-\\
-\sethlcolor{yellow}\hl{$G = P_{dBm} - S - P_{SPL} - (30 + 20log(20*10^{-6})$}.
-\\
-Avec l'application numérique, nous trouvons notre gain.
-\\
-\sethlcolor{green}\hl{$G = 30 + 47 - 130 -(30 + 20\log(20*10^{-6}) \approx 11$}.\\
-
-
-
-
-% Un autre formatage(je pense il est plus clair)
-
-\textbf{Un autre formatage:}\\
-
-
 Reprenons la formule du problème I :
 \begin{equation}
     P_{dBm} = 20log(S_{REF}*10^\frac{S}{20}*P_{REF}*10^\frac{P_{SPL}}{20}*10^\frac{G}{20})
 \end{equation}
-pour la simplifier: 
+pour la simplifier : 
 \begin{equation}
     P_{dBm} = 20\log(S_{REF}) + S + 20\log(P_{REF}) + P_{SPL} + G + 30
 \end{equation}
@@ -30,20 +12,16 @@ avec
     \item $P_{REF} = 20\mu P_a$
     \item $S = -47 \text{DBV}$
 \end{itemize}
-donc on a:
+donc nous avons :
 \begin{equation}
     P_{dbm} = 10log(V_a^2 * 1000) = 30
 \end{equation}
 (comme la dynamique après amplification est [-1V,+1V], donc $V_a = 1V$)
-nous obtenons :
+; nous obtenons :
 \begin{equation}
     G = P_{dBm} - 20\log(1) - 20\log(20*10^{-6}) - S - P_{SPL} - 30 
 \end{equation}
-soit
-\begin{equation}
-G = P_{dBm} - S - P_{SPL} - (30 + 20log(20*10^{-6})
-\end{equation}
+soit,
+\tcbox[colback=yellow!20, colframe=yellow, boxrule=2pt]{$G = P_{dBm} - S - P_{SPL} - (30 + 20log(20*10^{-6}))$}
 Avec l'application numérique, nous trouvons notre gain.
-\begin{equation}
-    G = 30 + 47 - 130 -(30 + 20\log(20*10^{-6}) \approx 11
-\end{equation}
+\tcbox[colback=green!20, colframe=green, boxrule=2pt]{$G = 30 + 47 - 130 -(30 + 20\log(20*10^{-6})) \approx 11$}

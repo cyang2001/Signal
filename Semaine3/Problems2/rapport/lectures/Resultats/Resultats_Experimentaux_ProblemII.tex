@@ -1,1 +1,19 @@
-ici est resultats
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{@{}lccccccr@{}} 
+    % '@{}' removes padding at the start and end of the table
+        \toprule % from booktabs
+        Nom de Fichier & Note & \( f_0 \) (Hz) & \( f_h \) (Hz) & \( n_h \)\tablefootnote{Seules les quantités harmoniques sont comptées, la fréquence fondamentale n'est pas inclue } & \( t_d \) (s) & \( t_f \) (s) & \( P_{dBm} \) \\
+        \midrule
+        Pi\_A\_96K.wav & A3 & 440.367 & 876.648 & 1 & 1.0417e-05 & 1.3567 & 9.0004  \\
+        Pi\_C\_96K.wav & C3 & 261.580 & - & 0 & 1.0417e-05 & 2.9677 & 5.9068 \\
+        Vi\_A3\_96K.wav & A3 & 440.367 & 3963.157 & 7 & 0.0781 & 1.8450 & 0.7896 \\
+        Vi\_C3\_96K.wav & C3 & 262.295 & 2360.814 & 4 & 0.0286 & 1.5718 & 4.3884 \\
+        Vi\_G4\_96K.wav & G4 & 780.488 & 3902.377 & 2 & 0.0593 & 1.5783 & 6.9208 \\
+        Fl\_A4\_96K.wav & A4 & 880.734 & - & 0 & 0.0231 & 1.6218 & 19.8006 \\
+        Fl\_B3\_96K.wav & B3 & 494.845 & 1979.1543 & 2 & 0.0079 & 1.8108 & 10.2884 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Résumé des caractéristiques acoustiques extraites pour chaque note.}
+    \label{tab:resume_notes}
+\end{table}
