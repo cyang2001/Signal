@@ -1,8 +1,8 @@
 Dans le domaine de l'analyse audio numérique, l'extraction des caractéristiques sonores des instruments de musique est essentielle pour la recherche d'informations musicales et la classification des instruments. Nous avons étudié trois caractéristiques clés : le centroïde spectral, le taux de croisements par zéro et l'enveloppe ADSR, ainsi que leur application dans l'identification des types d'instruments.
 
-\textbf{Le centroïde spectral} décrit le centre de gravité du spectre sonore, reflétant la « brillance » du son. Sa représentation mathématique est la suivante : 
+\textbf{Le centroïde spectral}\footnote{\href{https://en.wikipedia.org/wiki/Spectral_centroid}{https://en.wikipedia.org/wiki/Spectral\_centroid}} décrit le centre de gravité du spectre sonore, reflétant la « brillance » du son. Sa représentation mathématique est la suivante : 
 \begin{equation}
-    C = \frac{\sum_{n=0}^{N-1}f(n)\cdot S(n)}{\sum_{n=0}^{N-1}S(n)}
+    C = \frac{\sum_{n=0}^{N-1}f(n)\cdot S(n)}{\sum_{n=0}^{N-1}S(n)} 
 \end{equation}
 où :
 \begin{itemize}
@@ -10,42 +10,42 @@ où :
     \item \(S(n)\) l'amplitude correspondante à cette fréquence
 \end{itemize}
 
-\textbf{Le taux de croisements par zéro} mesure la fréquence à laquelle la forme d'onde du signal traverse l'axe temporel, et est liée à la hauteur et au timbre du son. Sa formule de calcul est la suivante :
+\textbf{Le taux de croisements par zéro} \footnote{\href{https://en.wikipedia.org/wiki/Zero-crossing_rate}{https://en.wikipedia.org/wiki/Zero-crossing\_rate}}mesure la fréquence à laquelle la forme d'onde du signal traverse l'axe temporel, et est liée à la hauteur et au timbre du son. Sa formule de calcul est la suivante :
 \begin{equation}
     ZCR = \frac{1}{T-1}\sum_{t=1}^{T-1}\frac{1}{2}|\text{sgn}(s(t))-\text{sgn}(s(t-1))|
 \end{equation}
 
-\textbf{L'enveloppe ADSR }analyse les variations dynamiques temporelles du son, où chaque phase est définie comme suit :
+\textbf{L'enveloppe ADSR }\footnote{\href{https://en.wikipedia.org/wiki/Envelope_(music)}{https://en.wikipedia.org/wiki/Envelope\_(music)}}analyse les variations dynamiques temporelles du son, où chaque phase est définie comme suit :
 \begin{itemize}
-    \item \textbf{Attack Time(A):}
+    \item \textbf{Attack Time(A) :}
 \end{itemize}
 \begin{equation}
     A = \min \{t|s(t)\geq0.9 \cdot P_{peak}, t\in [0, \frac{T}{f_s}]\}
 \end{equation}
 \begin{itemize}
-    \item \textbf{Decay Time(D):}
+    \item \textbf{Decay Time(D) :}
 \end{itemize}
 \begin{equation}
     D = \min \{t|s(t)\leq S_{level}, t\in [A, \frac{T}{f_s}] - A\}
 \end{equation}
 \begin{itemize}
-    \item \textbf{Sustain Level (S):}
+    \item \textbf{Sustain Level (S) :}
 \end{itemize}
 \begin{equation}
     S = \alpha \cdot P_{peak}
 \end{equation}
-Ou:
+Où :
 \begin{description}
     \item \(\alpha\) est un pourcentage de l'amplitude maximale
     \item \(P_{peak}\) est l'amplitude maximale du signal
 \end{description}
 \begin{itemize}
-    \item \textbf{Release Time (R):}
+    \item \textbf{Release Time (R) :}
 \end{itemize}
 \begin{equation}
     R = \min \{t |s(t) \leq \beta \cdot P_{initial}, t \in [t_{end}, \frac{T}{f_s}]  \} - t_{end}
 \end{equation}
-Où:
+Où :
 \begin{description}
     \item \(\beta\) est le coefficient qui détermine le seuil d'extinction sonore
     \item \(P_{initial}\) est l'amplitude au début de la phase de libération
