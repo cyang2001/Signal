@@ -19,7 +19,7 @@
     [s2, Fs2] = audioread("Jardin01.mp3");
     [s3, Fs3] = audioread("Jardin02.mp3");
     [s4, Fs4] = audioread("Ville01.mp3");
-
+    nom = ["MarteauPiqueur01.mp3", "Jardin01.mp3", "Jardin02.mp3", "Ville01.mp3"];
     % Initialize parameters
     S = -48; % Sensitivity in dBV
     G = 40;  % Gain in dB
@@ -32,12 +32,19 @@
     
     % Define window sizes for the analysis
     windowSizes = {39900, 31000, 40000, 37100};
-
+    
     % Process each signal
     for i = 1:length(signals)
         % Calculate the minimum number of samples for the given D_t
         minSamples = D_t * Fs{i};
-
+        power_mean_dBm = FunctionCalculerPowerMeandBM(FunctionAmplifier(signals{i}, G));
+        power_mean_mW = FunctionCalculerPowerMeanmW(FunctionAmplifier(signals{i}, G));
+        duree = length(signals{i}) / Fs{i};
+        rms = sqrt(power_mean_mW);
+        disp(['The power mean of ', char(nom(i)), ' is ', num2str(power_mean_dBm), ' dBm']);
+        disp(['The power mean of ', char(nom(i)), ' is ', num2str(power_mean_mW), ' mW']);
+        disp(['The duration of ', char(nom(i)), ' is ', num2str(duree), ' seconds']);
+        disp(['The rms of ', char(nom(i)), ' is ', num2str(rms), ' V']);
         % Initialize the array for storing cleaned intervals
         cleanedIntervals = []; 
 
@@ -165,4 +172,12 @@ function P_dbm = FunctionConvertSPLTodBM(P_SPL, S)
 
     % Convert SPL to dBm
     P_dbm = 10 * log10((M_ref * 10^(S / 20) * P_reference * 10^(P_SPL / 20) * 10^2)^2 * 1000);
+end
+
+function power_mean_dBm = FunctionCalculerPowerMeandBM(signal)
+  power_mean_dBm = 10 * log10(FunctionCalculerPowerMeanmW(signal) / 0.001);
+end
+
+function power_mean_mW = FunctionCalculerPowerMeanmW(signal)
+  power_mean_mW = mean(signal .^ 2) / 1000;
 end

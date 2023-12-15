@@ -95,10 +95,23 @@ function Problem2()
 
 end
 
+
+% CalculateWindowedPowerSliding calculates the windowed power of a signal using a sliding window approach.
+% The function takes in a signal and a window size as input and returns the power values for each window.
+% The power values are normalized by dividing them by 0.001.
+%
+% Inputs:
+%   - signal: The input signal for which the windowed power needs to be calculated.
+%   - windowSize: The size of the sliding window.
+%
+% Output:
+%   - p_W: The power values for each window, normalized by dividing them by 0.001.
+%
+% Example usage:
+%   signal = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+%   windowSize = 3;
+%   p_W = CalculateWindowedPowerSliding(signal, windowSize);
 function p_W = CalculateWindowedPowerSliding(signal, windowSize)
-    % Calculate the power of the given signal in dBm using a sliding window
-    % approach. This function smoothens the power calculation and converts
-    % it to dBm format.
 
     % Length of the signal
     signalLength = length(signal);
@@ -157,6 +170,20 @@ function [startTemp, endTemp] = DetectNoteTimes(audioSignal, fs, max)
 
 end
 
+
+% CalculateAveragePower calculates the average power of an audio signal within a specified time range.
+% 
+% Inputs:
+%   - audioSignal: the input audio signal
+%   - fs: the sampling frequency of the audio signal
+%   - startTime: the start time of the time range (in seconds)
+%   - endTime: the end time of the time range (in seconds)
+%
+% Output:
+%   - avgPower_dBm: the average power of the audio signal within the specified time range (in dBm)
+%
+% Example usage:
+%   avgPower = CalculateAveragePower(audioSignal, fs, 0.5, 1.5);
 function avgPower_dBm = CalculateAveragePower(audioSignal, fs, startTime, endTime)
   startIndex = floor(startTime * fs);
   endIndex = ceil(endTime * fs);
@@ -165,24 +192,56 @@ function avgPower_dBm = CalculateAveragePower(audioSignal, fs, startTime, endTim
 end
 
 
-function f0 = CalculateFundamentalFrequency(signal, fs)
-    % Calculate the fundamental frequency of the given signal
 
-    % Calculate the FFT of the signal
-    N = length(signal);
-    Y = fft(signal);
-    % Calculate the bilateral spectrum P2
-    P2 = abs(Y / N);
-    % And then calculate the unilateral spectrum P1 based on P2 and the signal length N.
-    P1 = P2(1:N / 2 + 1);
-    % Multiply the power by 2 to account for the negative frequencies
-    P1(2:end - 1) = 2 * P1(2:end - 1);
-    f = fs * (0:(N / 2)) / N;
-    % Find the frequency with the maximum amplitude
-    [~, loc] = max(P1);
-    f0 = f(loc);
+% CalculateFundamentalFrequency calculates the fundamental frequency of a given signal.
+% 
+% Inputs:
+%   - signal: The input signal for which the fundamental frequency needs to be calculated.
+%   - fs: The sampling frequency of the signal.
+%
+% Output:
+%   - f0: The fundamental frequency of the signal.
+%
+% Example usage:
+%   signal = sin(2*pi*100*(0:0.001:1));
+%   fs = 1000;
+%   f0 = CalculateFundamentalFrequency(signal, fs);
+function f0 = CalculateFundamentalFrequency(signal, fs)
+  % Calculate the fundamental frequency of the given signal
+
+  % Calculate the FFT of the signal
+  N = length(signal);
+  Y = fft(signal);
+  % Calculate the bilateral spectrum P2
+  P2 = abs(Y / N);
+  % And then calculate the unilateral spectrum P1 based on P2 and the signal length N.
+  P1 = P2(1:N / 2 + 1);
+  % Multiply the power by 2 to account for the negative frequencies
+  P1(2:end - 1) = 2 * P1(2:end - 1);
+  f = fs * (0:(N / 2)) / N;
+  % Find the frequency with the maximum amplitude
+  [~, loc] = max(P1);
+  f0 = f(loc);
 end
 
+
+% CalculateHarmonics calculates the harmonics of a given signal.
+% 
+% Inputs:
+%   - signal: the input signal
+%   - fs: the sampling frequency of the signal
+%   - f0: the fundamental frequency of the signal
+%
+% Outputs:
+%   - fh: the frequencies of the detected harmonics
+%   - nh: the number of detected harmonics
+%
+% Example usage:
+%   signal = sin(2*pi*1000*(0:1/fs:1));
+%   fs = 10000;
+%   f0 = 1000;
+%   [fh, nh] = CalculateHarmonics(signal, fs, f0);
+%
 function [fh, nh] = CalculateHarmonics(signal, fs, f0)
     N = length(signal);
     Y = fft(signal, N);
@@ -215,10 +274,26 @@ function [fh, nh] = CalculateHarmonics(signal, fs, f0)
 
 end
 
+% AutocorrelationFundamentalFrequency calculates the fundamental frequency of a given signal using the autocorrelation method.
+%
+% Syntax:
+%   f0_autocorr = AutocorrelationFundamentalFrequency(signal, fs)
+%
+% Input Arguments:
+%   - signal: The input signal for which the fundamental frequency needs to be calculated.
+%   - fs: The sampling frequency of the signal.
+%
+% Output Argument:
+%   - f0_autocorr: The calculated fundamental frequency of the signal. If no peak is found in the autocorrelation, NaN is returned.
+%
+% Example:
+%   signal = sin(2*pi*100*(0:1/fs:1));
+%   fs = 1000;
+%   f0 = AutocorrelationFundamentalFrequency(signal, fs);
+%
+% References:
+%   [1] Rabiner, L. R., & Schafer, R. W. (1978). Digital processing of speech signals. Prentice-Hall, Inc.
 function f0_autocorr = AutocorrelationFundamentalFrequency(signal, fs)
-    % Calculate the fundamental frequency of the given signal using the
-    % autocorrelation method
-    % Calculate the autocorrelation of the signal
     [autocorr, lags] = xcorr(signal, 'coeff');
     % Find the first positive peak of the autocorrelation
     positiveLags = lags >= 0;
@@ -236,6 +311,18 @@ function f0_autocorr = AutocorrelationFundamentalFrequency(signal, fs)
 
 end
 
+
+% GenerateFrequencyTables generates frequency tables for piano, violin, and flute.
+% The function calculates the frequencies for each note in different octaves
+% based on the base frequencies provided for each instrument.
+%
+% Output:
+%   - tablePiano: Frequency table for piano notes in different octaves.
+%   - tableViolin: Frequency table for violin notes in different octaves.
+%   - tableFlute: Frequency table for flute notes in different octaves.
+%
+% Example usage:
+%   [tablePiano, tableViolin, tableFlute] = GenerateFrequencyTables()
 function [tablePiano, tableViolin, tableFlute] = GenerateFrequencyTables()
     notes = ["A", "Bb", "B", "C", "C#", "D", "Eb", "E", "F", "F#", "G", "G#"];
 
@@ -280,38 +367,83 @@ function freqTable = CalculateFrequencies(baseFrequencies, numOctaves, type)
 
 end
 
+% CalculateSpectralCentroid calculates the spectral centroid of a given signal.
+% The spectral centroid is a measure of the center of mass of the spectrum.
+% 
+% Inputs:
+%   - signal: The input signal.
+%   - fs: The sampling frequency of the signal.
+%
+% Output:
+%   - spectralCentroid: The calculated spectral centroid.
+%
+% Example usage:
+%   signal = [0.1, 0.2, 0.3, 0.4, 0.5];
+%   fs = 44100;
+%   centroid = CalculateSpectralCentroid(signal, fs);
 function spectralCentroid = CalculateSpectralCentroid(signal, fs)
-    spectrum = abs(fft(signal));
-    normalizedSpectrum = spectrum / sum(spectrum);
-    frequency = (0:length(spectrum) - 1) * (fs / length(spectrum));
-    spectralCentroid = sum(frequency .* normalizedSpectrum);
+  spectrum = abs(fft(signal));
+  normalizedSpectrum = spectrum / sum(spectrum);
+  frequency = (0:length(spectrum) - 1) * (fs / length(spectrum));
+  spectralCentroid = sum(frequency .* normalizedSpectrum);
 end
 
+
+% CalculateZeroCrossingRate calculates the zero crossing rate of a given signal.
+% The zero crossing rate is defined as the number of times the signal changes sign divided by the length of the signal.
+%
+% Inputs:
+%   - signal: The input signal for which the zero crossing rate needs to be calculated.
+%
+% Output:
+%   - zeroCrossingRate: The calculated zero crossing rate of the signal.
+%
+% Example:
+%   signal = [1, -2, 3, -4, 5];
+%   zeroCrossingRate = CalculateZeroCrossingRate(signal);
 function zeroCrossingRate = CalculateZeroCrossingRate(signal)
-    zeroCrossingRate = sum(abs(diff(sign(signal)))) / length(signal);
+  zeroCrossingRate = sum(abs(diff(sign(signal)))) / length(signal);
 end
 
+
+
+% CalculateADSR calculates the Attack, Decay, Sustain, and Release parameters for a given signal.
+% 
+% Inputs:
+%   - signal: The input signal
+%   - fs: The sampling frequency of the signal
+%   - maxSignal: The maximum value of the signal
+% 
+% Output:
+%   - ADSRParams: A structure containing the calculated ADSR parameters
+%
+% Example usage:
+%   signal = [0.1, 0.3, 0.5, 0.7, 0.9, 0.7, 0.5, 0.3, 0.1];
+%   fs = 44100;
+%   maxSignal = 1;
+%   params = CalculateADSR(signal, fs, maxSignal);
+% See also: DetectNoteTimes
 function ADSRParams = CalculateADSR(signal, fs, maxSignal)
+  % Calculate the start and end times of the note in the signal
+  [startTemp, endTemp] = DetectNoteTimes(signal, fs, maxSignal);
 
-    [startTemp, endTemp] = DetectNoteTimes(signal, fs, maxSignal);
+  % Calculate the attack time
+  peakAmplitude = max(signal);
+  attackTime = find(signal >= peakAmplitude * 0.9, 1) / fs;
 
-    % Attack time: Time taken for the amplitude to reach its peak after onset
-    peakAmplitude = max(signal);
-    attackTime = find(signal >= peakAmplitude * 0.9, 1) / fs;
+  % Calculate the decay time
+  sustainLevel = peakAmplitude * 0.7;
+  decayTime = find(signal <= sustainLevel, 1) / fs - attackTime;
 
-    % Decay time: Time taken for the amplitude to drop to sustain level
-    sustainLevel = peakAmplitude * 0.7; % Assume sustain level is 70 % of peak
-    decayTime = find(signal <= sustainLevel, 1) / fs - attackTime;
+  % Calculate the release time
+  releaseStartIndex = floor(endTemp * fs);
+  releaseTime = length(signal(releaseStartIndex:end)) / fs;
 
-    % Release time: Time taken for the sound to fade away after the end of the note
-    % For simplicity, we can assume that the release phase starts at the end of the note
-    releaseStartIndex = floor(endTemp * fs);
-    releaseTime = length(signal(releaseStartIndex:end)) / fs;
-
-    ADSRParams.attack = attackTime;
-    ADSRParams.decay = decayTime;
-    ADSRParams.sustain = sustainLevel;
-    ADSRParams.release = releaseTime;
+  % Store the calculated parameters in a structure
+  ADSRParams.attack = attackTime;
+  ADSRParams.decay = decayTime;
+  ADSRParams.sustain = sustainLevel;
+  ADSRParams.release = releaseTime;
 end
 
 function instrument = ClassifyInstrument(ADSRParams, spectralCentroid, zeroCrossingRate)
