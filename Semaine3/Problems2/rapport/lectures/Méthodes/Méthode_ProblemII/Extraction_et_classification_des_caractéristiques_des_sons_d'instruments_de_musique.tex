@@ -1,6 +1,6 @@
 Dans le domaine de l'analyse audio numérique, l'extraction des caractéristiques sonores des instruments de musique est essentielle pour la recherche d'informations musicales et la classification des instruments. Nous avons étudié trois caractéristiques clés : le centroïde spectral, le taux de croisements par zéro et l'enveloppe ADSR, ainsi que leur application dans l'identification des types d'instruments.
 
-\textbf{Le centroïde spectral}\footnote{\href{https://en.wikipedia.org/wiki/Spectral_centroid}{https://en.wikipedia.org/wiki/Spectral\_centroid}} décrit le centre de gravité du spectre sonore, reflétant la « brillance » du son. Sa représentation mathématique est la suivante : 
+\textbf{Le centroïde spectral}\footnote{\href{https://en.wikipedia.org/wiki/Spectral_centroid}{Cliquez ici pour accéder à la source sur le centroïde spectral}} décrit le centre de gravité du spectre sonore, reflétant la « brillance » du son. Sa représentation mathématique est la suivante : 
 \begin{equation}
     C = \frac{\sum_{n=0}^{N-1}f(n)\cdot S(n)}{\sum_{n=0}^{N-1}S(n)} 
 \end{equation}
@@ -10,12 +10,12 @@ où :
     \item \(S(n)\) l'amplitude correspondante à cette fréquence
 \end{itemize}
 
-\textbf{Le taux de croisements par zéro} \footnote{\href{https://en.wikipedia.org/wiki/Zero-crossing_rate}{https://en.wikipedia.org/wiki/Zero-crossing\_rate}}mesure la fréquence à laquelle la forme d'onde du signal traverse l'axe temporel, et est liée à la hauteur et au timbre du son. Sa formule de calcul est la suivante :
+\textbf{Le taux de croisements par zéro} \footnote{\href{https://en.wikipedia.org/wiki/Zero-crossing_rate}{Cliquez ici pour accéder à la source sur le taux de croisements par zéro}}mesure la fréquence à laquelle la forme d'onde du signal traverse l'axe temporel, et est liée à la hauteur et au timbre du son. Sa formule de calcul est la suivante :
 \begin{equation}
     ZCR = \frac{1}{T-1}\sum_{t=1}^{T-1}\frac{1}{2}|\text{sgn}(s(t))-\text{sgn}(s(t-1))|
 \end{equation}
 
-\textbf{L'enveloppe ADSR }\footnote{\href{https://en.wikipedia.org/wiki/Envelope_(music)}{https://en.wikipedia.org/wiki/Envelope\_(music)}}analyse les variations dynamiques temporelles du son, où chaque phase est définie comme suit :
+\textbf{L'enveloppe ADSR }\footnote{\href{https://en.wikipedia.org/wiki/Envelope_(music)}{Cliquez ici pour accéder à la source de l'enveloppe ADSR}}analyse les variations dynamiques temporelles du son, où chaque phase est définie comme suit :
 \begin{itemize}
     \item \textbf{Attack Time(A) :}
 \end{itemize}

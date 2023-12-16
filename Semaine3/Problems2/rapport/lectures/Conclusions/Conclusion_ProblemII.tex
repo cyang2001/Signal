@@ -1,3 +1,13 @@
-En conclusion, nous avons réussi par le code via MATLAB à répondre aux attentes du cahier des charges, c'est-à-dire à caractériser des notes de musiques. Cette caractérisation passe par la détection de la note jouée, de sa fréquence fondamentale et de son harmonique et de sa puissance moyenne en dBm. Le programme détecte aussi les instants de début et de fin ainsi que le nombre d'harmoniques.
+%En conclusion, nous avons réussi par le code via MATLAB à %répondre aux attentes du cahier des charges, c'est-à-dire à caractériser des notes de musiques. Cette caractérisation passe par la détection de la note jouée, de sa fréquence fondamentale et de son harmonique et de sa puissance moyenne en dBm. Le programme détecte aussi les instants de début et de fin ainsi que le nombre d'harmoniques.
 
-Les résultats à l'exécution du programme sont cohérents avec ce que l'on attend (avec le nom des fichiers qui donnent le nom des notes) et aussi de ce que l'on entend.
+%Les résultats à l'exécution du programme sont cohérents avec ce que l'on attend (avec le nom des fichiers qui donnent le nom des notes) et aussi de ce que l'on entend.
+
+Notre étude présentée propose un algorithme pour la détection et la caractérisation précises de notes de musique jouées par différents instruments, tels que le violon, la flûte et le piano. Cet algorithme se distingue par sa capacité à fournir des informations détaillées sur chaque note, y compris les instants de début et de fin, la puissance moyenne du signal en dBm, la fréquence fondamentale, et d'autres caractéristiques pertinentes pour la classification des notes selon l'instrument.
+
+L'approche adoptée se décline en deux étapes essentielles : la détection du signal sonore, et le décodage des caractéristiques de chaque note. Une attention particulière est accordée à la détection des harmoniques et à la détermination précise de la fréquence fondamentale, en utilisant des méthodes telles que la transformée de Fourier rapide et l'auto-corrélation.
+
+Bien que l'algorithme ait démontré une grande efficacité dans la caractérisation des notes, la partie de la recherche consacrée à la classification des instruments à travers des caractéristiques audio telles que le centroïde spectral, le taux de croisements par zéro, et l'enveloppe ADSR, a révélé des défis significatifs. Ces défis proviennent principalement de la difficulté de définir des seuils précis et de la superposition des caractéristiques entre différents instruments.
+
+Face à ces difficultés, nous suggérons l'adoption de méthodes d'apprentissage automatique, notamment l'apprentissage profond, pour améliorer la classification des instruments. Ces techniques peuvent apprendre automatiquement des caractéristiques complexes et offrir une meilleure précision et capacité de généralisation.
+
+En conclusion, notre recherche offrir une méthode pour la détection et la caractérisation des notes. Bien que la classification des instruments reste un défi, l'intégration de l'apprentissage automatique dans l'approche proposée promet d'améliorer encore davantage la précision et l'efficacité de l'analyse musicale.
